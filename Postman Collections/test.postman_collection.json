@@ -1,0 +1,70 @@
+{
+	"info": {
+		"_postman_id": "a8e8b0aa-6a72-4677-867a-5e23ea8e06f2",
+		"name": "test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24176729"
+	},
+	"item": [
+		{
+			"name": "List Sites Copy",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api_url}}/sites",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"sites"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "slack webhook test",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"text\": {\r\n    \"test\": \"test\",\r\n    \"test2\": \"test2\"\r\n  }\r\n}"
+				},
+				"url": {
+					"raw": "https://hooks.slack.com/services/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",
+					"protocol": "https",
+					"host": [
+						"hooks",
+						"slack",
+						"com"
+					],
+					"path": [
+						"services",
+						"T03DK79N9EZ",
+						"B04CLTNTRFF",
+						"qitT8oDqcCv7OKQsawkAd7d7"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

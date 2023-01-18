@@ -1,0 +1,1612 @@
+{
+	"info": {
+		"_postman_id": "49beba93-8cf2-41fb-aafc-8dbb56810507",
+		"name": "InstaWP Connect",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24176729"
+	},
+	"item": [
+		{
+			"name": "App",
+			"item": [
+				{
+					"name": "Syncs",
+					"item": []
+				},
+				{
+					"name": "Check API Key",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "default"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/check-key",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"check-key"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "App Disconnect",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "default"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "default"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}/disconnect-site/:connect_id",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"disconnect-site",
+								":connect_id"
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "71"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Connected Site",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\":\"http://visihi.test3.instawp.xyz\",\r\n    \"username\": \"base_encode('admin')\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/connects",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Init Backup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\":\"138\",\r\n    \"php_version\": \"7.1\",\r\n    \"success\": true,\r\n    \"message\": \"Backup Initiated\",\r\n    \"dev\": {\r\n        \"branch\": \"main\",\r\n        \"destination_connect_id\": \"\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/connects/10/backup_init",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connects",
+								"10",
+								"backup_init"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Runcloud Install ssl Test API",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "serverId",
+									"value": "218808",
+									"type": "text"
+								},
+								{
+									"key": "webAppId",
+									"value": "1146822",
+									"type": "text"
+								},
+								{
+									"key": "serverIp",
+									"value": "159.89.166.26",
+									"type": "text"
+								},
+								{
+									"key": "domain",
+									"value": "vik112.rc.instawp.cc",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/v1/runcloud-install-ssl-test",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"v1",
+								"runcloud-install-ssl-test"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Backup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": 138,\r\n\t\"backup_id\": 13,\r\n\t\"files\": [{\r\n\t\t\"filename\": \"test.zip\",\r\n\t\t\"size\": 17.5\r\n\t}]\r\n}\r\n\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/connects/10/backup_upload",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connects",
+								"10",
+								"backup_upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Backup Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": \"instawp-63ae4fc7ab406\",\r\n    \"type\": \"upload\",\r\n    \"progress\": 100,\r\n    \"message\": \"Upload To Cloud\",\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/connects/169/backup_status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connects",
+								"169",
+								"backup_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Restore Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"progress\": 38,\r\n    \"message\": \"in progress\",\r\n    \"connect_id\": 123,\r\n    \"destination_url\": \"currentsite.instawp.xyz\",\r\n    \"completed\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/connects/29/restore_status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connects",
+								"29",
+								"restore_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Restore Status",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": \"instawp-63ad7ffb5fb48\",\r\n    \"connect_id\": 169,\r\n    \"site_id\": 1072\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/connects/get_restore_status",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"connects",
+								"get_restore_status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Connect Heartbeat",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\" : \"encrypted data\"\r\n} \r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}connects/:connect_id/heartbeat",
+							"host": [
+								"{{url}}connects"
+							],
+							"path": [
+								":connect_id",
+								"heartbeat"
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "54888888"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Account Usage",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"data\" : \"encrypted data\"\r\n} \r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}connects/:connect_id/usage",
+							"host": [
+								"{{url}}connects"
+							],
+							"path": [
+								":connect_id",
+								"usage"
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "548"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task Status (not used)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": 138,\r\n    \"progress\": 92,\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/task-status/138",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"task-status",
+								"138"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Init Restore (internal)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"task_id\": 138,\r\n    \"progress\": 92,\r\n    \"completed\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/wp-restore",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wp-restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "wp-config (internal)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{token}}",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "{{accept}}",
+								"type": "text"
+							},
+							{
+								"key": "api_key",
+								"value": "16|rQOxNNI3kH4pFEVl1OSTtMJi64mtgcexhOqhXuvJ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/wp-config",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"wp-config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Syncs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "P3VgWApUGRIdhB9xyPI55ZCLLrte3rIvIEDywRjQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{url}}connects/:connect_id/syncs?both_sides=true",
+							"host": [
+								"{{url}}connects"
+							],
+							"path": [
+								":connect_id",
+								"syncs"
+							],
+							"query": [
+								{
+									"key": "both_sides",
+									"value": "true",
+									"description": "default true"
+								}
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "1009"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Syncs",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/connects/:connect_id/syncs",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"connects",
+										":connect_id",
+										"syncs"
+									],
+									"variable": [
+										{
+											"key": "connect_id",
+											"value": null
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n            {\"date\": \"\", \"wp_user_id\": 123, \"changes\":{ \"progress\": {\"posts\": 20}, \"total\": {\"posts\": 40} }, \"message\": \"\", \"status\": \"pending/in_progress/completed/error\", \"progress\": 80}\n    ],\n    \"message\": \"Syncs Fetched\",\n    \"status\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Sync Object",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "P3VgWApUGRIdhB9xyPI55ZCLLrte3rIvIEDywRjQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{url}}connects/:connect_id/syncs/:sync_id",
+							"host": [
+								"{{url}}connects"
+							],
+							"path": [
+								":connect_id",
+								"syncs",
+								":sync_id"
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "1009"
+								},
+								{
+									"key": "sync_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get Sync Object",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"value": "application/x-www-form-urlencoded",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "progress",
+											"value": "30",
+											"type": "text"
+										},
+										{
+											"key": "status",
+											"value": "completed",
+											"type": "text"
+										},
+										{
+											"key": "changes",
+											"value": "{\"posts\": 40}",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{url}}connects/:connect_id/syncs/:sync_id",
+									"host": [
+										"{{url}}connects"
+									],
+									"path": [
+										":connect_id",
+										"syncs",
+										":sync_id"
+									],
+									"variable": [
+										{
+											"key": "connect_id",
+											"value": "53"
+										},
+										{
+											"key": "sync_id",
+											"value": "337"
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n            {\"date\": \"\", \"wp_user_id\": 123, \"changes\":{ \"progress\": {\"posts\": 20}, \"total\": {\"posts\": 40} }, \"message\": \"\", \"status\": \"pending/in_progress/completed/error\", \"progress\": 80}\n    ],\n    \"message\": \"Syncs Fetched\",\n    \"status\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Sync Upload",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "k4GQRN3h9fKOLk39CeaTB5ORITMHEi0En6LjnAJp",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"encrypted_content\" : \"asdfasdf\",\n    \"dest_connect_id\": 45,\n    \"changes\" : {\n        \"posts\": 12,\n        \"pages\": 12\n    },\n    \"upload_wp_user\": 24,\n    \"message\" : \"this is a new sync\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}connects/:connect_id/syncs",
+							"host": [
+								"{{url}}connects"
+							],
+							"path": [
+								":connect_id",
+								"syncs"
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "53"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sync Upload",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"encrypted_content\" : \"\",\n    \"dest_connect_id\": 123,\n    \"changes\" : {\n        \"posts\": 12,\n        \"pages\": 12\n    },\n    \"upload_wp_user\": 123\n\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/connects/:connect_id/syncs",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"connects",
+										":connect_id",
+										"syncs"
+									],
+									"variable": [
+										{
+											"key": "connect_id",
+											"value": null
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"sync_id\": 123\n    },\n    \"message\": \"Sync Initiated\",\n    \"status\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Sync Update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "PB8Pp4ksXhbhUuWGOXdcJYByw3zX80g7EVLQo7fx",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"progress\": 80,\n    \"status\": \"pending/in_progress/completed/error\",\n    \"message\": \"Error ABC for post 41\",\n    \"changes\" : {\n        \"posts\": 40\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}connects/:connect_id/syncs/:sync_id",
+							"host": [
+								"{{api_url}}connects"
+							],
+							"path": [
+								":connect_id",
+								"syncs",
+								":sync_id"
+							],
+							"variable": [
+								{
+									"key": "connect_id",
+									"value": "53"
+								},
+								{
+									"key": "sync_id",
+									"value": "337"
+								}
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Sync Update",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"progress\": 80,\n    \"status\": \"pending/in_progress/completed/error\",\n    \"message\": \"\",\n    \"changes\" : {\n        \"posts\": 40\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{url}}/connects/:connect_id/syncs/:sync_id",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"connects",
+										":connect_id",
+										"syncs",
+										":sync_id"
+									],
+									"variable": [
+										{
+											"key": "connect_id",
+											"value": null
+										},
+										{
+											"key": "sync_id",
+											"value": null
+										}
+									]
+								}
+							},
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json",
+									"name": "Content-Type",
+									"description": "",
+									"type": "text"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": {\n        \"sync_id\": 123\n    },\n    \"message\": \"Sync Initiated\",\n    \"status\": true\n}"
+						}
+					]
+				},
+				{
+					"name": "Runcloud custom ssl install",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "20SGyhWOyBx8oQCusJIHNPLN3nYL4EiZl3xuuFRYOovznQ9dw1MMy6WyaDtLZ52b",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "2RZWkbKEe8MrrMjyvcVVGdXNQAKdbjYXoBtBNmk209a1",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"provider\": \"custom\",\r\n    \"enableHttp\": false,\r\n    \"enableHsts\": true,\r\n    \"privateKey\": \"-----BEGIN PRIVATE KEY-----\\n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\\n-----END PRIVATE KEY-----\",\r\n    \"certificate\": \"-----BEGIN CERTIFICATE-----\\n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\\n-----END CERTIFICATE-----\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://manage.runcloud.io/api/v2/servers/218808/webapps/1146822/ssl",
+							"protocol": "https",
+							"host": [
+								"manage",
+								"runcloud",
+								"io"
+							],
+							"path": [
+								"api",
+								"v2",
+								"servers",
+								"218808",
+								"webapps",
+								"1146822",
+								"ssl"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Plugin",
+			"item": [
+				{
+					"name": "Config",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"api_key\": \"O08EOL0NCZZpotBnnfzfDsj2ATX0THuyx9Yy3bCu\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WP_URL}}/index.php/wp-json/instawp-connect/v1/config",
+							"host": [
+								"{{WP_URL}}"
+							],
+							"path": [
+								"index.php",
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Config Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"api_key\": \"Arcr8KcrqDLrnW0w8kxN2qzAbUxHFzFRNjydd1IS\",\r\n    \"api_domain\": \"https://s.instawp.io\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://wordpress-891015-3106651.cloudwaysapps.com/wp-json/instawp-connect/v1/config",
+							"protocol": "https",
+							"host": [
+								"wordpress-891015-3106651",
+								"cloudwaysapps",
+								"com"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"config"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "api_key",
+								"value": "102|SouBdaa121zb1U2DDlsWK8tXaoV8L31WsXnqMyOy",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"urls\" : [ \"https://iwp-staging-backups.sgp1.digitaloceanspaces.com/1662365544_swp.test3.instawp.xyz_instawp-6315af5e400d0_2022-09-05-08-12_backup_all.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=M2BPJQSQGORZEGHZIQE3%2F20220905%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220905T081313Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=c68fe95b4dabad2575c2d934f3ef5d685b2bbc55793fd0ae51499d83f79b314d\" ],\r\n    \"wp\" :{\r\n\t    \"users\": [\r\n\t\t    {\r\n\t\t        \"username\" : \"admin\",\r\n\t\t        \"password\" : \"admin\",\r\n\t\t        \"email\": \"k4545@gmail.com\"\r\n\t\t    }\r\n\t    ],\r\n\t    \"options\": [\r\n\t    \t{\"option_name\" : \"option_value\"}\r\n\t    ]\r\n\t}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{WP_URL}}/wp-json/instawp-connect/v1/restore",
+							"host": [
+								"{{WP_URL}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore Vikas",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "api_key",
+								"value": "1632|DA6Rg21dByEor9fgWdVugXLzIvofLk1zakqAVKz2",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "file",
+								"value": "https://sourcesite.a.instawpsites.com/1673314601_instawp-63bcc11624fc8_2023-01-10-01-36_backup_all.zip",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"urls\":[\"https://iwp-staging-backups.sgp1.digitaloceanspaces.com/1673342212_instawp-63bd2ce685b1e_2023-01-10-09-16_backup_all.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=M2BPJQSQGORZEGHZIQE3%2F20230110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230110T091714Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=9de418c6b43776e8787b1511c7b5550e2f5e13e54fdca776b931b603dd87e133\"],\"wp\":{\"users\":[{\"username\":\"seyikajuje9757\",\"password\":\"jWkpIXzK7o6LgtaESD1Y\",\"email\":\"vikas@instawp.com\"}],\"options\":{\"instawp_is_staging\":true,\"instawp_sync_connect_id\":329,\"instawp_sync_parent_id\":322,\"instawp_sync_parent_url\":\"https://sourcesite.a.instawpsites.com\"}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://instawpconnectdest.local/index.php/wp-json/instawp-connect/v1/restore",
+							"protocol": "https",
+							"host": [
+								"instawpconnectdest",
+								"local"
+							],
+							"path": [
+								"index.php",
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore Vikas Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "6db9208278a7acfea7b058645c6676b87a973178b9402b5037d103e6a7139fc7",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "api_key",
+								"value": "1632|DA6Rg21dByEor9fgWdVugXLzIvofLk1zakqAVKz2",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "file",
+								"value": "https://sourcesite.a.instawpsites.com/1673314601_instawp-63bcc11624fc8_2023-01-10-01-36_backup_all.zip",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"urls\":[\"https://iwp-staging-backups.sgp1.digitaloceanspaces.com/1673342212_instawp-63bd2ce685b1e_2023-01-10-09-16_backup_all.zip?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=M2BPJQSQGORZEGHZIQE3%2F20230110%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20230110T091714Z&X-Amz-SignedHeaders=host&X-Amz-Expires=7200&X-Amz-Signature=9de418c6b43776e8787b1511c7b5550e2f5e13e54fdca776b931b603dd87e133\"],\"wp\":{\"users\":[{\"username\":\"seyikajuje9757\",\"password\":\"jWkpIXzK7o6LgtaESD1Y\",\"email\":\"vikas@instawp.com\"}],\"options\":{\"instawp_is_staging\":true,\"instawp_sync_connect_id\":329,\"instawp_sync_parent_id\":322,\"instawp_sync_parent_url\":\"https://sourcesite.a.instawpsites.com\"}}}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://uck-trader-dasu.a.instawpsites.com/index.php/wp-json/instawp-connect/v1/restore",
+							"protocol": "https",
+							"host": [
+								"uck-trader-dasu",
+								"a",
+								"instawpsites",
+								"com"
+							],
+							"path": [
+								"index.php",
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"restore"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Backup",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "api_key",
+								"value": "102|SouBdaa121zb1U2DDlsWK8tXaoV8L31WsXnqMyOy",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{WP_URL}}/wp-json/instawp-connect/v1/backup",
+							"host": [
+								"{{WP_URL}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"backup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Task Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WP_URL}}/wp-json/instawp-connect/v1/task_status/630f00934e256",
+							"host": [
+								"{{WP_URL}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"task_status",
+								"630f00934e256"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Code",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"api_key\" : \"{{dev_api_key}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_prod_url}}/wp-json/instawp-connect/v2/auto-login-code",
+							"host": [
+								"{{dev_prod_url}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v2",
+								"auto-login-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Code Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"api_key\" : \"6GuhyRuvngRIlnEt6YKiCKLDrVEdZ3z9KdVafLBB\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://suinspector-geso.blr3.instawp-testing.xyz/wp-json/instawp-connect/v2/auto-login-code",
+							"protocol": "https",
+							"host": [
+								"suinspector-geso",
+								"blr3",
+								"instawp-testing",
+								"xyz"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v2",
+								"auto-login-code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Url",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"api_key\" : \"{{dev_api_key}}\",\n    \"c\" : \"cde7-144-2c-86ddd6650241e-da-6e93-0ea0d61645c37-47c664-e3949d9a038a14e7d\",\n    \"s\" : \"xubakeciko1799\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_prod_url}}/wp-json/instawp-connect/v2/auto-login",
+							"host": [
+								"{{dev_prod_url}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v2",
+								"auto-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Login Url Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"api_key\" : \"{{dev_api_key}}\",\n    \"c\" : \"cde7-144-2c-86ddd6650241e-da-6e93-0ea0d61645c37-47c664-e3949d9a038a14e7d\",\n    \"s\" : \"xubakeciko1799\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_prod_url}}/wp-json/instawp-connect/v2/auto-login",
+							"host": [
+								"{{dev_prod_url}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v2",
+								"auto-login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Initiate Sync",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"encrypted_contents\": \"\",\n    \"source_connect_id\": 123,\n    \"changes\": {\n        \"posts\": 123,\n        \"pages\": 123\n    },\n    \"sync_id\": 456\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://securework.co/instawp/index.php/wp-json/instawp-connect/v1/sync",
+							"protocol": "http",
+							"host": [
+								"securework",
+								"co"
+							],
+							"path": [
+								"instawp",
+								"index.php",
+								"wp-json",
+								"instawp-connect",
+								"v1",
+								"sync"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Cache",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"api_key\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_prod_url}}/wp-json/instawp-connect/v2/clear-cache",
+							"host": [
+								"{{dev_prod_url}}"
+							],
+							"path": [
+								"wp-json",
+								"instawp-connect",
+								"v2",
+								"clear-cache"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "f66aa4824eae226b749c74e50526e3c1d0db146a7e79ad19f70afb2d5f24694d",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

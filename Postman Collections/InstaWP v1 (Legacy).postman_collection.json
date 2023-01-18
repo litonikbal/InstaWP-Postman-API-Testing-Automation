@@ -1,0 +1,2887 @@
+{
+	"info": {
+		"_postman_id": "0012505d-716b-444b-bc5c-69668289fca0",
+		"name": "InstaWP v1 (Legacy)",
+		"description": "InstaWp v1 APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24176729"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.environment.set(\"email\", pm.variables.replaceIn(\"{{$randomEmail}}\"))\r",
+									"pm.environment.set(\"password\", pm.variables.replaceIn(`{{$randomFirstName}}123@`))\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonData = JSON.parse(responseBody);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"    pm.environment.set('token', jsonData.data.token);",
+									"    pm.test(`Check email is ${jsonData.data.email}`, function () {",
+									"    pm.expect(jsonData.data.email).to.eql(pm.environment.get(\"email\"));      ",
+									"});",
+									"});",
+									"pm.test(\"check response Status  1\", function () {",
+									"    pm.expect(jsonData.status).to.eql(1);",
+									"});",
+									"pm.test(jsonData.message, function () {      ",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"{{email}}\",\n    \"password\":\"{{password}}\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/login",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-localization",
+										"value": "es",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"nishant.webdev@hotmail.com\",\r\n    \"password\":\"demo1admin\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/auth/login",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx-rc"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Sep 2022 06:02:07 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "Vary",
+									"value": "Origin"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "private, must-revalidate"
+								},
+								{
+									"key": "pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "expires",
+									"value": "-1"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "br"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 1,\n    \"message\": \"Logged in successfully.\",\n    \"data\": {\n        \"name\": \"nishant demo\",\n        \"email\": \"nishant.webdev@hotmail.com\",\n        \"profile_photo_path\": null,\n        \"token\": \"459|Atty5dACPDDZiGDRCFlOIcwUPkzjPdiUsJd7CpgU\",\n        \"profile_photo_url\": \"https://ui-avatars.com/api/?name=n+d&color=7F9CF5&background=EBF4FF\",\n        \"active_plan\": {\n            \"type\": \"free\",\n            \"name\": \"Free\",\n            \"price\": 0,\n            \"description\": {\n                \"sites\": 5,\n                \"expiry_days\": 2,\n                \"reserve_sites\": false,\n                \"restore_sites\": 3,\n                \"templates\": 1,\n                \"custom_domain\": false,\n                \"cloning\": false,\n                \"ftp_access\": false,\n                \"team_member\": 0,\n                \"teams\": false,\n                \"ssh_access\": false,\n                \"disk_storage\": 500,\n                \"template_sites\": 5,\n                \"template_customize\": false,\n                \"advance_template_options\": false,\n                \"instant_template\": false,\n                \"advance_config\": false,\n                \"white_label\": false,\n                \"dedicated_server\": false,\n                \"git_operations\": 1,\n                \"advance_deployments\": false\n            },\n            \"stripe_plan_id\": null,\n            \"interval\": 1,\n            \"user_id\": null,\n            \"deleted_at\": null,\n            \"old_price\": null\n        },\n        \"is_team_owner\": false,\n        \"subscriptions\": [],\n        \"current_team\": null\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"test test\",\n    \"email\":\"tyrtyr@assadsdads.com\",\n    \"password\":\"demo1admin\",\n    \"password_confirmation\":\"demo1admin\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/auth/register",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/auth/logout",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "Every API call requires an Authorization header. You should specify the access token as a Bearer token in the Authorization header of their request. Example\n\n`curl -X $HTTP_METHOD -H \"Authorization: Bearer $TOKEN\" \"api_url/$OBJECT\"`"
+		},
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    if(jsonData.data.token){\r",
+							"    pm.environment.set('token', jsonData.data.token);\r",
+							"}\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set(\"email\", pm.variables.replaceIn(\"test@gmail.com\"))\r",
+							"pm.environment.set(\"password\", pm.variables.replaceIn(\"demo1admin\"))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"{{email}}\",\r\n    \"password\":\"{{password}}\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}login",
+					"host": [
+						"{{url}}login"
+					]
+				},
+				"description": "Login API"
+			},
+			"response": [
+				{
+					"name": "Login",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"nishant.webdev@hotmail.com\",\r\n    \"password\":\"demo1admin\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}login",
+							"host": [
+								"{{url}}login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx-rc"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Sep 2022 06:02:07 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "private, must-revalidate"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "expires",
+							"value": "-1"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 1,\n    \"message\": \"Logged in successfully.\",\n    \"data\": {\n        \"name\": \"nishant demo\",\n        \"email\": \"nishant.webdev@hotmail.com\",\n        \"profile_photo_path\": null,\n        \"token\": \"459|Atty5dACPDDZiGDRCFlOIcwUPkzjPdiUsJd7CpgU\",\n        \"profile_photo_url\": \"https://ui-avatars.com/api/?name=n+d&color=7F9CF5&background=EBF4FF\",\n        \"active_plan\": {\n            \"type\": \"free\",\n            \"name\": \"Free\",\n            \"price\": 0,\n            \"description\": {\n                \"sites\": 5,\n                \"expiry_days\": 2,\n                \"reserve_sites\": false,\n                \"restore_sites\": 3,\n                \"templates\": 1,\n                \"custom_domain\": false,\n                \"cloning\": false,\n                \"ftp_access\": false,\n                \"team_member\": 0,\n                \"teams\": false,\n                \"ssh_access\": false,\n                \"disk_storage\": 500,\n                \"template_sites\": 5,\n                \"template_customize\": false,\n                \"advance_template_options\": false,\n                \"instant_template\": false,\n                \"advance_config\": false,\n                \"white_label\": false,\n                \"dedicated_server\": false,\n                \"git_operations\": 1,\n                \"advance_deployments\": false\n            },\n            \"stripe_plan_id\": null,\n            \"interval\": 1,\n            \"user_id\": null,\n            \"deleted_at\": null,\n            \"old_price\": null\n        },\n        \"is_team_owner\": false,\n        \"subscriptions\": [],\n        \"current_team\": null\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"if(jsonData.data.token){\r",
+							"pm.environment.set('token', jsonData.data.token);\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"test test\",\r\n    \"email\":\"bhattachanl17@gmail.com\",\r\n    \"password\":\"demo1admin\",\r\n    \"password_confirmation\":\"demo1admin\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}register",
+					"host": [
+						"{{url}}register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Resend verification Email",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}email/resend",
+					"host": [
+						"{{url}}email"
+					],
+					"path": [
+						"resend"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Social Login/Signup",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"let jsonData = JSON.parse(responseBody);\r",
+							"pm.environment.set('token', jsonData.data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"token\":\"ya29.a0ARrdaM_H2GSMV-0o89CCjebtomeoVObN9NxRp34Vw4841qTKHL42IqB6lijrbYEPXH8GWd34au6yVPSu1H7gljKDZJxbcU893Q_W8dEAD8QmMuknNKrzXtrFlNtV1gi-9Y58Uccnsx74M6TCiiUMN02jnQZOvTU\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}social-login/google",
+					"host": [
+						"{{url}}social-login"
+					],
+					"path": [
+						"google"
+					]
+				},
+				"description": "Endpoint supports google, facebook, twitter providers.\nNeed to pass social media access token in a raw as \"token\"."
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}logout",
+					"host": [
+						"{{url}}logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Sites",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}sites",
+					"host": [
+						"{{url}}sites"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "all",
+							"description": "Supported type values: all, active, expired",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page Number",
+							"disabled": true
+						},
+						{
+							"key": "tags",
+							"value": "10,9",
+							"description": "Tag IDs comma separated",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "",
+							"disabled": true
+						},
+						{
+							"key": "request_type",
+							"value": "",
+							"description": "Supported type values: site_list, template_add",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Sites",
+					"originalRequest": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{url}}sites",
+							"host": [
+								"{{url}}sites"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "all",
+									"description": "Supported type values: all, active, expired",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"description": "Page Number",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "10,9",
+									"description": "Tag IDs comma separated",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "",
+									"disabled": true
+								},
+								{
+									"key": "request_type",
+									"value": "",
+									"description": "Supported type values: site_list, template_add",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Server",
+							"value": "nginx-rc"
+						},
+						{
+							"key": "Date",
+							"value": "Fri, 09 Sep 2022 15:59:11 GMT"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept-Encoding"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin,Authorization"
+						},
+						{
+							"key": "Cache-Control",
+							"value": "private, must-revalidate"
+						},
+						{
+							"key": "pragma",
+							"value": "no-cache"
+						},
+						{
+							"key": "expires",
+							"value": "-1"
+						},
+						{
+							"key": "X-RateLimit-Limit",
+							"value": "60"
+						},
+						{
+							"key": "X-RateLimit-Remaining",
+							"value": "59"
+						},
+						{
+							"key": "X-XSS-Protection",
+							"value": "1; mode=block"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Content-Encoding",
+							"value": "br"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"status\": 1,\n    \"message\": \"Sites Retrived.\",\n    \"data\": {\n        \"sites\": {\n            \"current_page\": 1,\n            \"data\": [\n                {\n                    \"id\": 3845,\n                    \"user_id\": 28,\n                    \"team_id\": 28,\n                    \"server_id\": null,\n                    \"sub_domain\": \"jowayu-m3ak.blr3.instawp-testing.xyz\",\n                    \"main_domain\": null,\n                    \"created_via\": null,\n                    \"wp_version\": \"5.8\",\n                    \"php_version\": \"8.0\",\n                    \"wp_cache\": 0,\n                    \"browser_cache\": 0,\n                    \"server_cache\": 0,\n                    \"site_meta\": {\n                        \"ic_site_id\": 1296,\n                        \"site_name\": \"jowayu-m3ak.blr3.instawp-testing.xyz\",\n                        \"wp_cli\": false,\n                        \"server_cli\": false,\n                        \"wp_admin_url\": \"https://jowayu-m3ak.blr3.instawp-testing.xyz/wp-admin\",\n                        \"wp_admin_email\": \"nishant.webdev@hotmail.com\",\n                        \"ic_task_id\": \"6318b298bc8cd\",\n                        \"server_username\": \"gizexipufa8112\",\n                        \"server_password\": \"yjcxo1b7YzCVmXlwtABT\",\n                        \"wp_username\": \"jowayu\",\n                        \"wp_password\": \"HhXsIaAP\",\n                        \"db_username\": \"gizexipufa8112_xiwuvazozu5078\",\n                        \"db_password\": \"AIVDN8Bz7QKPJmvgkluO\",\n                        \"db_name\": \"gizexipufa8112_F4KdI2mu7a8spbiAx3wZ\"\n                    },\n                    \"template_id\": null,\n                    \"is_template_site\": 0,\n                    \"ssl_status\": null,\n                    \"will_be_deleted\": 0,\n                    \"hash\": \"$2y$10$nkiElSir0pS07dFyPMqaSuWlxfyYf9A8OtVjF6eMYzSUHOOs9kPX2\",\n                    \"external_server_delete_status\": null,\n                    \"configuration_id\": 1,\n                    \"php_config_json\": [\n                        {\n                            \"runcloud_key\": \"maxExecutionTime\",\n                            \"key\": \"max_execution_time\",\n                            \"value\": 30,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(seconds)\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"maxInputTime\",\n                            \"key\": \"max_input_time\",\n                            \"value\": 60,\n                            \"info_text\": \"(seconds)\",\n                            \"tooltip_txt\": \"\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"maxInputVars\",\n                            \"key\": \"max_input_vars\",\n                            \"value\": 1000,\n                            \"tooltip_txt\": \"\"\n                        },\n                        {\n                            \"runcloud_key\": \"memoryLimit\",\n                            \"key\": \"memory_limit\",\n                            \"value\": 256,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(mb)\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"allowUrlFopen\",\n                            \"key\": \"allow_url_fopen\",\n                            \"value\": 1,\n                            \"tooltip_txt\": \"(0 or 1)\"\n                        },\n                        {\n                            \"runcloud_key\": \"postMaxSize\",\n                            \"key\": \"post_max_size\",\n                            \"value\": 256,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(mb)\"\n                        },\n                        {\n                            \"runcloud_key\": \"uploadMaxFilesize\",\n                            \"key\": \"upload_max_filesize\",\n                            \"value\": 256,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(mb)\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"sessionGcMaxlifetime\",\n                            \"key\": \"session.gc_maxlifetime\",\n                            \"value\": 1440,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(seconds)\"\n                        }\n                    ],\n                    \"db_file\": null,\n                    \"auto_login_file\": \"instawp-autologin-4dc3e73efd.php\",\n                    \"code_editor_file\": null,\n                    \"parent_site_id\": 3811,\n                    \"cloud_type\": \"instacloud\",\n                    \"ic_task_id\": \"6318b298bc8cd\",\n                    \"ic_site_id\": 1296,\n                    \"ic_server_group_id\": 2,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2022-09-07T09:25:21.000000Z\",\n                    \"added_at\": \"2022-09-07 09:25:21\",\n                    \"updated_at\": \"2022-09-09T15:45:05.000000Z\",\n                    \"name\": \"jowayu-m3ak\",\n                    \"url\": \"https://jowayu-m3ak.blr3.instawp-testing.xyz\",\n                    \"in_pool\": 0,\n                    \"is_expired\": 0,\n                    \"is_suspended\": 0,\n                    \"is_reserved\": 0,\n                    \"user_ip_address\": \"2095c30cebbeb00c42538bc7fc0c1db203dec8db\",\n                    \"disk_usage_mb\": 54,\n                    \"domain_url\": \"jowayu-m3ak.blr3.instawp-testing.xyz\",\n                    \"is_domain_register\": false,\n                    \"user\": {\n                        \"name\": \"nishant demo\",\n                        \"id\": 28,\n                        \"current_team_id\": 28,\n                        \"profile_photo_url\": \"https://ui-avatars.com/api/?name=n+d&color=7F9CF5&background=EBF4FF\",\n                        \"active_plan\": {\n                            \"type\": \"agencies-1\",\n                            \"name\": \"Agencies\",\n                            \"price\": 30,\n                            \"description\": {\n                                \"sites\": 50,\n                                \"expiry_days\": 15,\n                                \"reserve_sites\": true,\n                                \"restore_sites\": 50,\n                                \"templates\": 25,\n                                \"custom_domain\": true,\n                                \"cloning\": true,\n                                \"ftp_access\": true,\n                                \"team_member\": 5,\n                                \"teams\": true,\n                                \"ssh_access\": true,\n                                \"disk_storage\": 3000,\n                                \"template_sites\": 25,\n                                \"template_customize\": true,\n                                \"advance_template_options\": true,\n                                \"instant_template\": true,\n                                \"advance_config\": true,\n                                \"white_label\": true,\n                                \"dedicated_server\": true,\n                                \"git_operations\": 1000,\n                                \"advance_deployments\": true\n                            },\n                            \"stripe_plan_id\": \"price_1JG2vmH8l5cRQNVjv6ccIOqk\",\n                            \"interval\": 1,\n                            \"user_id\": null,\n                            \"deleted_at\": null,\n                            \"old_price\": 40\n                        },\n                        \"is_team_owner\": true,\n                        \"subscriptions\": [\n                            {\n                                \"id\": 6,\n                                \"user_id\": 28,\n                                \"name\": \"default\",\n                                \"stripe_id\": \"sub_JzPFSKQUDqOQnA\",\n                                \"stripe_status\": \"active\",\n                                \"stripe_price\": \"price_1JG2vmH8l5cRQNVjv6ccIOqk\",\n                                \"plan_price\": 30,\n                                \"amount_charged\": 30,\n                                \"coupon_code\": null,\n                                \"quantity\": 1,\n                                \"trial_ends_at\": null,\n                                \"ends_at\": null,\n                                \"is_migrated\": 0,\n                                \"created_at\": \"2021-08-06T10:37:31.000000Z\",\n                                \"updated_at\": \"2022-07-25T12:15:39.000000Z\",\n                                \"items\": [\n                                    {\n                                        \"id\": 86,\n                                        \"subscription_id\": 6,\n                                        \"stripe_id\": \"si_M7fXRdMFRLN74o\",\n                                        \"stripe_product\": \"prod_JtqbxhyQPho8pP\",\n                                        \"stripe_price\": \"price_1JG2vmH8l5cRQNVjv6ccIOqk\",\n                                        \"quantity\": 1,\n                                        \"created_at\": \"2022-07-25T12:15:38.000000Z\",\n                                        \"updated_at\": \"2022-07-25T12:15:38.000000Z\"\n                                    }\n                                ]\n                            }\n                        ],\n                        \"current_team\": {\n                            \"id\": 28,\n                            \"user_id\": 28,\n                            \"name\": \"nishant's Team\",\n                            \"personal_team\": true,\n                            \"deleted_at\": null,\n                            \"server\": null\n                        }\n                    }\n                },\n                {\n                    \"id\": 3811,\n                    \"user_id\": 28,\n                    \"team_id\": 28,\n                    \"server_id\": 2,\n                    \"sub_domain\": \"jowayu.test3.instawp.xyz\",\n                    \"main_domain\": null,\n                    \"created_via\": null,\n                    \"wp_version\": \"5.8\",\n                    \"php_version\": \"8.0\",\n                    \"wp_cache\": 0,\n                    \"browser_cache\": 0,\n                    \"server_cache\": 0,\n                    \"site_meta\": \"{\\\"token\\\":null,\\\"site_name\\\":\\\"jowayu.test3.instawp.xyz\\\",\\\"wp_cli\\\":false,\\\"server_cli\\\":false,\\\"wp_admin_url\\\":\\\"https:\\\\/\\\\/jowayu.test3.instawp.xyz\\\\/wp-admin\\\",\\\"wp_admin_email\\\":\\\"nishant.webdev@hotmail.com\\\",\\\"wp_username\\\":\\\"jowayu\\\",\\\"wp_password\\\":\\\"HhXsIaAP\\\",\\\"ic_task_id\\\":\\\"JLGdJoHAPTUG5\\\",\\\"wordpress\\\":\\\"{\\\\\\\"user\\\\\\\":\\\\\\\"monamilisesudebe\\\\\\\",\\\\\\\"dbname\\\\\\\":\\\\\\\"zofadeto\\\\\\\",\\\\\\\"dbuser\\\\\\\":\\\\\\\"sijahohuzobujipapoguyene\\\\\\\",\\\\\\\"dbpass\\\\\\\":\\\\\\\"LFpAplHz\\\\\\\",\\\\\\\"sitename\\\\\\\":\\\\\\\"jowayu\\\\\\\",\\\\\\\"url\\\\\\\":\\\\\\\"https:\\\\\\\\\\\\/\\\\\\\\\\\\/jowayu.test3.instawp.xyz\\\\\\\",\\\\\\\"adminuser\\\\\\\":\\\\\\\"jowayu\\\\\\\",\\\\\\\"adminpass\\\\\\\":\\\\\\\"HhXsIaAP\\\\\\\",\\\\\\\"adminemail\\\\\\\":\\\\\\\"nishant.webdev@hotmail.com\\\\\\\",\\\\\\\"wpversion\\\\\\\":\\\\\\\"5.8\\\\\\\",\\\\\\\"method\\\\\\\":\\\\\\\"create\\\\\\\",\\\\\\\"key\\\\\\\":\\\\\\\"ClarAmWoryMediTdoNchistBugHaIr\\\\\\\"}\\\"}\",\n                    \"template_id\": null,\n                    \"is_template_site\": 0,\n                    \"ssl_status\": null,\n                    \"will_be_deleted\": 0,\n                    \"hash\": \"$2y$10$iPHDCRGYqgbS7q0a8kME1OUqPFmpUaIwQse4Rg51n0TZazS1ZKPFS\",\n                    \"external_server_delete_status\": null,\n                    \"configuration_id\": 1,\n                    \"php_config_json\": [\n                        {\n                            \"runcloud_key\": \"maxExecutionTime\",\n                            \"key\": \"max_execution_time\",\n                            \"value\": 30,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(seconds)\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"maxInputTime\",\n                            \"key\": \"max_input_time\",\n                            \"value\": 60,\n                            \"info_text\": \"(seconds)\",\n                            \"tooltip_txt\": \"\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"maxInputVars\",\n                            \"key\": \"max_input_vars\",\n                            \"value\": 1000,\n                            \"tooltip_txt\": \"\"\n                        },\n                        {\n                            \"runcloud_key\": \"memoryLimit\",\n                            \"key\": \"memory_limit\",\n                            \"value\": 256,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(mb)\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"allowUrlFopen\",\n                            \"key\": \"allow_url_fopen\",\n                            \"value\": 1,\n                            \"tooltip_txt\": \"(0 or 1)\"\n                        },\n                        {\n                            \"runcloud_key\": \"postMaxSize\",\n                            \"key\": \"post_max_size\",\n                            \"value\": 256,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(mb)\"\n                        },\n                        {\n                            \"runcloud_key\": \"uploadMaxFilesize\",\n                            \"key\": \"upload_max_filesize\",\n                            \"value\": 256,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(mb)\",\n                            \"is_pro_feature\": true\n                        },\n                        {\n                            \"runcloud_key\": \"sessionGcMaxlifetime\",\n                            \"key\": \"session.gc_maxlifetime\",\n                            \"value\": 1440,\n                            \"tooltip_txt\": \"\",\n                            \"info_text\": \"(seconds)\"\n                        }\n                    ],\n                    \"db_file\": null,\n                    \"auto_login_file\": \"instawp-6319ff02d634b.php\",\n                    \"code_editor_file\": null,\n                    \"parent_site_id\": null,\n                    \"cloud_type\": \"runcloud\",\n                    \"ic_task_id\": \"JLGdJoHAPTUG5\",\n                    \"ic_site_id\": null,\n                    \"ic_server_group_id\": null,\n                    \"deleted_at\": null,\n                    \"created_at\": \"2022-09-06T10:23:53.000000Z\",\n                    \"added_at\": \"2022-09-06 10:23:53\",\n                    \"updated_at\": \"2022-09-09T11:00:10.000000Z\",\n                    \"name\": \"jowayu\",\n                    \"url\": \"https://jowayu.test3.instawp.xyz\",\n                    \"in_pool\": 0,\n                    \"is_expired\": 0,\n                    \"is_suspended\": 0,\n                    \"is_reserved\": 0,\n                    \"user_ip_address\": \"ddbc75d6a5505b8a66763ddfeb06a3767b6573fe\",\n                    \"disk_usage_mb\": 51.34,\n                    \"domain_url\": \"jowayu.test3.instawp.xyz\",\n                    \"is_domain_register\": false,\n                    \"user\": {\n                        \"name\": \"nishant demo\",\n                        \"id\": 28,\n                        \"current_team_id\": 28,\n                        \"profile_photo_url\": \"https://ui-avatars.com/api/?name=n+d&color=7F9CF5&background=EBF4FF\",\n                        \"active_plan\": {\n                            \"type\": \"agencies-1\",\n                            \"name\": \"Agencies\",\n                            \"price\": 30,\n                            \"description\": {\n                                \"sites\": 50,\n                                \"expiry_days\": 15,\n                                \"reserve_sites\": true,\n                                \"restore_sites\": 50,\n                                \"templates\": 25,\n                                \"custom_domain\": true,\n                                \"cloning\": true,\n                                \"ftp_access\": true,\n                                \"team_member\": 5,\n                                \"teams\": true,\n                                \"ssh_access\": true,\n                                \"disk_storage\": 3000,\n                                \"template_sites\": 25,\n                                \"template_customize\": true,\n                                \"advance_template_options\": true,\n                                \"instant_template\": true,\n                                \"advance_config\": true,\n                                \"white_label\": true,\n                                \"dedicated_server\": true,\n                                \"git_operations\": 1000,\n                                \"advance_deployments\": true\n                            },\n                            \"stripe_plan_id\": \"price_1JG2vmH8l5cRQNVjv6ccIOqk\",\n                            \"interval\": 1,\n                            \"user_id\": null,\n                            \"deleted_at\": null,\n                            \"old_price\": 40\n                        },\n                        \"is_team_owner\": true,\n                        \"subscriptions\": [\n                            {\n                                \"id\": 6,\n                                \"user_id\": 28,\n                                \"name\": \"default\",\n                                \"stripe_id\": \"sub_JzPFSKQUDqOQnA\",\n                                \"stripe_status\": \"active\",\n                                \"stripe_price\": \"price_1JG2vmH8l5cRQNVjv6ccIOqk\",\n                                \"plan_price\": 30,\n                                \"amount_charged\": 30,\n                                \"coupon_code\": null,\n                                \"quantity\": 1,\n                                \"trial_ends_at\": null,\n                                \"ends_at\": null,\n                                \"is_migrated\": 0,\n                                \"created_at\": \"2021-08-06T10:37:31.000000Z\",\n                                \"updated_at\": \"2022-07-25T12:15:39.000000Z\",\n                                \"items\": [\n                                    {\n                                        \"id\": 86,\n                                        \"subscription_id\": 6,\n                                        \"stripe_id\": \"si_M7fXRdMFRLN74o\",\n                                        \"stripe_product\": \"prod_JtqbxhyQPho8pP\",\n                                        \"stripe_price\": \"price_1JG2vmH8l5cRQNVjv6ccIOqk\",\n                                        \"quantity\": 1,\n                                        \"created_at\": \"2022-07-25T12:15:38.000000Z\",\n                                        \"updated_at\": \"2022-07-25T12:15:38.000000Z\"\n                                    }\n                                ]\n                            }\n                        ],\n                        \"current_team\": {\n                            \"id\": 28,\n                            \"user_id\": 28,\n                            \"name\": \"nishant's Team\",\n                            \"personal_team\": true,\n                            \"deleted_at\": null,\n                            \"server\": null\n                        }\n                    }\n                }\n            ],\n            \"first_page_url\": \"https://s.instawp.io/api/v1/sites?page=1\",\n            \"from\": 1,\n            \"last_page\": 1,\n            \"last_page_url\": \"https://s.instawp.io/api/v1/sites?page=1\",\n            \"links\": [\n                {\n                    \"url\": null,\n                    \"label\": \"&laquo; Previous\",\n                    \"active\": false\n                },\n                {\n                    \"url\": \"https://s.instawp.io/api/v1/sites?page=1\",\n                    \"label\": \"1\",\n                    \"active\": true\n                },\n                {\n                    \"url\": null,\n                    \"label\": \"Next &raquo;\",\n                    \"active\": false\n                }\n            ],\n            \"next_page_url\": null,\n            \"path\": \"https://s.instawp.io/api/v1/sites\",\n            \"per_page\": 5,\n            \"prev_page_url\": null,\n            \"to\": 2,\n            \"total\": 2\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Teams",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}teams",
+					"host": [
+						"{{url}}teams"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Templates",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}templates",
+					"host": [
+						"{{url}}templates"
+					],
+					"query": [
+						{
+							"key": "type",
+							"value": "private",
+							"description": "By Default takes all templates, Supported type values: shared, private",
+							"disabled": true
+						},
+						{
+							"key": "per_page",
+							"value": "5",
+							"description": " By deafult 10, set 'all' to remove pagination.",
+							"disabled": true
+						},
+						{
+							"key": "page",
+							"value": "1",
+							"description": "Page Number",
+							"disabled": true
+						},
+						{
+							"key": "team_id",
+							"value": "4",
+							"description": "By Default takes user's current team",
+							"disabled": true
+						},
+						{
+							"key": "site_id",
+							"value": "1",
+							"description": "Filter templates by site id",
+							"disabled": true
+						},
+						{
+							"key": "request_type",
+							"value": "add_site",
+							"description": "Supported type values: add_site, template_list",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Template Counts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}template-counts",
+					"host": [
+						"{{url}}template-counts"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Site",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/1210",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"1210"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Auto Login URL",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}get-auto-login",
+					"host": [
+						"{{url}}get-auto-login"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Code Editor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/code-editor/1",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"code-editor",
+						"1"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site DB Editor",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/db-editor/1",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"db-editor",
+						"1"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Logs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response ok\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.expect(pm.response.json().status).to.eql(1);",
+							"    pm.expect(pm.response.json().message).to.match(/log Retrived/);",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/log/:type/:site_id",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"log",
+						":type",
+						":site_id"
+					],
+					"variable": [
+						{
+							"key": "type",
+							"value": "error",
+							"description": "Supported types: error, access"
+						},
+						{
+							"key": "site_id",
+							"value": "3845",
+							"description": "28,140"
+						}
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Installation Status (Guest Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/guest-installation-status/25",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"guest-installation-status",
+						"25"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Installation Status (User Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/user-installation-status/66",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"user-installation-status",
+						"66"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "PHP, WP Versions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}versions",
+					"host": [
+						"{{url}}versions"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Default Coupon",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}default-coupon",
+					"host": [
+						"{{url}}default-coupon"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "User Configs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}user/configs",
+					"host": [
+						"{{url}}user"
+					],
+					"path": [
+						"configs"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"site_name\": \"khangendra\",\r\n    \"wp_version\":\"5.8\",\r\n    \"php_version\":\"8.0\",\r\n    \"pr_num\": \"\",\r\n    \"template_slug\": \"khaptad\",\r\n    \"git_deployment\": true,\r\n    \"repo_id\": \"\",\r\n    \"override_url\":\"\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site",
+					"host": [
+						"{{url}}site"
+					]
+				},
+				"description": "Create a new site."
+			},
+			"response": [
+				{
+					"name": "Site Create",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"site_name\": \"yoursitename\",\r\n    \"wp_version\":\"5.8\",\r\n    \"php_version\":\"8.0\",\r\n    \"pr_num\": \"\",\r\n    \"template_slug\": \"\",\r\n    \"git_deployment\": true,\r\n    \"repo_id\": \"\",\r\n    \"override_url\":\"\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}site",
+							"host": [
+								"{{url}}site"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Site Create Guest",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"site_name\": \"\",\r\n    \"wp_version\":\"5.7\",\r\n    \"php_version\":\"7.4\",\r\n    \"configuration_id\":1\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}guest-site",
+					"host": [
+						"{{url}}guest-site"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Shared Template Site Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"template_slug\": \"dddddd\",\r\n    \"email\":\"\",\r\n    \"details_over_mail\":false,\r\n    \"subscribe_newsletter\":false\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}shared-template-site",
+					"host": [
+						"{{url}}shared-template-site"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Config Update",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"config_id\": 64\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}config-update/1210",
+					"host": [
+						"{{url}}config-update"
+					],
+					"path": [
+						"1210"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Plugins Install by URL Slug (User Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"slugs\": \"\",\r\n    \"urls\":\"https://wordpress.org/plugins/classic-editor,https://wordpress.org/plugins/classic-widgets\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site/user-install-plugin-by-slug/2",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"user-install-plugin-by-slug",
+						"2"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Themes Install by URL Slug (User Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"slugs\": \"slug1,slug2\",\r\n    \"urls\":\"\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site/user-install-theme-by-slug/25",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"user-install-theme-by-slug",
+						"25"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Plugins/Themes Install by Zip URL(User Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plugin_zip_urls\": \"https://github.com/claudiosanches/wordpress-plugin-boilerplate/archive/refs/heads/master.zip,https://github.com/hlashbrooke/WordPress-Plugin-Template/archive/refs/heads/master.zip\",\r\n    \"theme_zip_urls\":\"\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site/user-install-plugin-theme-by-zip/:site_id",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"user-install-plugin-theme-by-zip",
+						":site_id"
+					],
+					"variable": [
+						{
+							"key": "site_id",
+							"value": "3811"
+						}
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Plugins Install by URL Slug (Guest Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"slugs\": \"contact-form-7,classic-editor\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site/guest-install-plugin-by-slug/26",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"guest-install-plugin-by-slug",
+						"26"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Themes Install by URL Slug (Guest Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"slugs\": \"slug1,slug2\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site/guest-install-theme-by-slug/26",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"guest-install-theme-by-slug",
+						"26"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Plugins/Themes Install by Zip URL(Guest Site)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"plugin_zip_urls\": \"\",\r\n    \"theme_zip_urls\":\"\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}site/guest-install-plugin-theme-by-zip/2",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"guest-install-plugin-theme-by-zip",
+						"2"
+					]
+				},
+				"description": "Need to pass site ID in the URL endpoint."
+			},
+			"response": []
+		},
+		{
+			"name": "Site Delete",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/3475",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"3475"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Site Delete BY PR,Template, RepoID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"template_slug\":\"githubtest\",\r\n\t\"repo_id\":2,\r\n\t\"pr_num\":43\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}sites-pr",
+					"host": [
+						"{{url}}sites-pr"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Site Export Local WP file",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}site/export-localwp-file/47",
+					"host": [
+						"{{url}}site"
+					],
+					"path": [
+						"export-localwp-file",
+						"47"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Git Repository Create",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"repository_url\":\"https://github.com/nishantwebdev\",\r\n    \"branch\":\"dev\",\r\n    \"destination_folder\":\"wp-content/plugins\",\r\n    \"repository_type\":\"public\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}config/3/git-repository",
+					"host": [
+						"{{url}}config"
+					],
+					"path": [
+						"3",
+						"git-repository"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Git Repositories Get",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "{{url}}git-repositories?configuration_id=3",
+					"host": [
+						"{{url}}git-repositories"
+					],
+					"query": [
+						{
+							"key": "configuration_id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Dialogflow Webhook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"responseId\": \"73ea9591-082a-4e57-a8f6-36feaffe19a9-37284719\",\r\n  \"queryResult\": {\r\n    \"queryText\": \"create a wordpress site with elementor plugin\",\r\n    \"parameters\": {\r\n      \"plugin\": [\"slider\"],\r\n      \"theme\": [\"education\"]\r\n    },\r\n    \"allRequiredParamsPresent\": true,\r\n    \"fulfillmentText\": \"Thanks, here is a new WordPress website with Starter Templates — Elementor, WordPress \\u0026 Beaver Builder Templates plugin\",\r\n    \"fulfillmentMessages\": [{\r\n      \"text\": {\r\n        \"text\": [\"Thanks, here is a new WordPress website with Starter Templates — Elementor, WordPress \\u0026 Beaver Builder Templates plugin\"]\r\n      }\r\n    }],\r\n    \"outputContexts\": [{\r\n      \"name\": \"projects/instawpio/agent/sessions/webdemo-0f84028a-d003-f670-0c76-f9a0a28cc7ab/contexts/__system_counters__\",\r\n      \"parameters\": {\r\n        \"no-input\": 0.0,\r\n        \"no-match\": 0.0,\r\n        \"plugin\": [\"elementor\"],\r\n        \"plugin.original\": [\"elementor\"],\r\n        \"theme\": [],\r\n        \"theme.original\": []\r\n      }\r\n    }],\r\n    \"intent\": {\r\n      \"name\": \"projects/instawpio/agent/intents/35c9573c-aa73-4635-adb8-068589c9a23e\",\r\n      \"displayName\": \"need a wordpress site with any contact form plugin\"\r\n    },\r\n    \"intentDetectionConfidence\": 0.7692872,\r\n    \"languageCode\": \"en\"\r\n  },\r\n  \"originalDetectIntentRequest\": {\r\n    \"payload\": {\r\n    }\r\n  },\r\n  \"session\": \"projects/instawpio/agent/sessions/webdemo-0f84028a-d003-f670-0c76-f9a0a28cc7ab\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}dialogflow/webhook",
+					"host": [
+						"{{url}}dialogflow"
+					],
+					"path": [
+						"webhook"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get SSH Key Pairs",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}ssh-key-pairs",
+					"host": [
+						"{{url}}ssh-key-pairs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate SSH Key for Git",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{url}}key-pair",
+					"host": [
+						"{{url}}key-pair"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Task Update Webhook",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task_id\":\"56f4sd6f548973z\",\r\n    \"percentage_complete\":100,\r\n    \"status\":\"completed\",\r\n    \"comment\":\"\",\r\n    \"payload\": {\r\n            \"site_id\": 140,\r\n            \"server_user_id\": 140,\r\n            \"server_group_id\": \"2\",\r\n            \"provider_id\": 1,\r\n            \"hst_hostname\": \"128.199.29.185\",\r\n            \"hst_port\": 14124,\r\n            \"hst_hash\": \"lgkxnC6j46bYjBcf6d4vg8CtBLQeXbFm\",\r\n            \"hst_returncode\": \"yes\",\r\n            \"username\": \"nezayududi9302\",\r\n            \"password\": \"Lgf0TaQu7UIchxAryGD2\",\r\n            \"email\": \"test@gmail.com\",\r\n            \"domain\": \"test3.blr3.instawp-testing.xyz\",\r\n            \"prefix_domain\": \"test3\",\r\n            \"value\": \"128.199.29.185\",\r\n            \"hosted_zone_id\": \"Z08399541FQUP87Y8CCHF\",\r\n            \"server_key\": \"server_5\",\r\n            \"wp_version\": \"5.8\",\r\n            \"php_version\": \"8.0\"\r\n        }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}webhook/update-cloud-task",
+					"host": [
+						"{{url}}webhook"
+					],
+					"path": [
+						"update-cloud-task"
+					]
+				},
+				"description": "task_id - cloud task id.\n\npercentage_complete - 0 to 100 up to 2 decimal place.\n\nstatus - 'pending','progress','completed','error'"
+			},
+			"response": []
+		},
+		{
+			"name": "Block Site & User - Admin",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "v0wAixQyi6JMrkPyMDWYrC64e73s7tGaL13zuu1r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"domain\":\"sit.n1.instawp-testing.xyz\",\r\n    \"source\":\"manual\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}admin/block-site-and-user",
+					"host": [
+						"{{url}}admin"
+					],
+					"path": [
+						"block-site-and-user"
+					]
+				},
+				"description": "it's supports following parameters\n\n\"domain\" ,\n\n\"site_id\"(app site id),\n\n\"ic_site_id\"(cloud site id),\n\n\"source\" (source of abuse report)"
+			},
+			"response": [
+				{
+					"name": "Block Site & User by App Site ID - Admin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"site_id\":285,\r\n    \"source\":\"manual\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}admin/block-site-and-user",
+							"host": [
+								"{{url}}admin"
+							],
+							"path": [
+								"block-site-and-user"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				},
+				{
+					"name": "Block Site & User by Cloud Site ID - Admin",
+					"originalRequest": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ic_site_id\":1783,\r\n    \"source\":\"manual\"\r\n}"
+						},
+						"url": {
+							"raw": "{{url}}admin/block-site-and-user",
+							"host": [
+								"{{url}}admin"
+							],
+							"path": [
+								"block-site-and-user"
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Site Suspended Status- Admin",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "v0wAixQyi6JMrkPyMDWYrC64e73s7tGaL13zuu1r",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"domain\":\"sit.n1.instawp-testing.xyz\"\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}admin/site/is-suspended",
+					"host": [
+						"{{url}}admin"
+					],
+					"path": [
+						"site",
+						"is-suspended"
+					]
+				},
+				"description": "it's supports following parameters\n\n\"domain\" ,\n\n\"site_id\"(app site id),\n\n\"ic_site_id\"(cloud site id),"
+			},
+			"response": []
+		},
+		{
+			"name": "Nishant-Webhook Local",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"response ok\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.expect(pm.response.json().status).to.eql(1);",
+							"    pm.expect(pm.response.json().message).to.match(/Task Updated/);",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"task_id\":\"631ed21e8414e\",\r\n    \"percentage_complete\":80,\r\n    \"status\":\"progress\",\r\n    \"comment\":\"\",\r\n    \"payload\": {\r\n            \"site_id\": 140,\r\n            \"server_user_id\": 140,\r\n            \"server_group_id\": \"2\",\r\n            \"provider_id\": 1,\r\n            \"hst_hostname\": \"128.199.29.185\",\r\n            \"hst_port\": 14124,\r\n            \"hst_hash\": \"lgkxnC6j46bYjBcf6d4vg8CtBLQeXbFm\",\r\n            \"hst_returncode\": \"yes\",\r\n            \"username\": \"nezayududi9302\",\r\n            \"password\": \"Lgf0TaQu7UIchxAryGD2\",\r\n            \"email\": \"test@gmail.com\",\r\n            \"domain\": \"test3.blr3.instawp-testing.xyz\",\r\n            \"prefix_domain\": \"test3\",\r\n            \"value\": \"128.199.29.185\",\r\n            \"hosted_zone_id\": \"Z08399541FQUP87Y8CCHF\",\r\n            \"server_key\": \"server_5\",\r\n            \"wp_version\": \"5.8\",\r\n            \"php_version\": \"8.0\"\r\n        }\r\n\r\n}"
+				},
+				"url": {
+					"raw": "{{url}}webhook/update-cloud-task",
+					"host": [
+						"{{url}}webhook"
+					],
+					"path": [
+						"update-cloud-task"
+					]
+				},
+				"description": "task_id - cloud task id.\n\npercentage_complete - 0 to 100 up to 2 decimal place.\n\nstatus - 'pending','progress','completed','error'"
+			},
+			"response": []
+		},
+		{
+			"name": "Upload Site Content (internal API)",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"warning": "This is a duplicate header and will be overridden by the Content-Type header generated by Postman.",
+						"key": "Content-Type",
+						"value": "multipart/form-data",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "type",
+							"value": "plugin",
+							"description": "It can be either plugin, theme or media",
+							"type": "text"
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": []
+						}
+					]
+				},
+				"url": {
+					"raw": "{{api_url}}/sites/121/upload-content",
+					"host": [
+						"{{api_url}}"
+					],
+					"path": [
+						"sites",
+						"121",
+						"upload-content"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

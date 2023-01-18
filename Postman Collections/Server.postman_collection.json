@@ -1,0 +1,3284 @@
+{
+	"info": {
+		"_postman_id": "c7a725d3-f07f-4a45-aa97-0aee46b53967",
+		"name": "Server",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24176729"
+	},
+	"item": [
+		{
+			"name": "New Site",
+			"item": [
+				{
+					"name": "v-add-user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"user name - \" + pm.collectionVariables.get('h_username'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_username', pm.variables.replaceIn('u{{$timestamp}}')); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-add-user",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "username",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "InstaWPPassword!123",
+									"description": "password",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "email@domain.com",
+									"description": "email",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "v-add-user",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "hash",
+											"value": "{{hash}}",
+											"type": "text"
+										},
+										{
+											"key": "cmd",
+											"value": "v-add-user",
+											"type": "text"
+										},
+										{
+											"key": "arg1",
+											"value": "{{h_username}}",
+											"description": "username",
+											"type": "text"
+										},
+										{
+											"key": "arg2",
+											"value": "InstaWPPassword!123",
+											"description": "password",
+											"type": "text"
+										},
+										{
+											"key": "arg3",
+											"value": "email@domain.com",
+											"description": "email",
+											"type": "text"
+										},
+										{
+											"key": "returncode",
+											"value": "no",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "https://{{server_ip}}:{{server_port}}/api/",
+									"protocol": "https",
+									"host": [
+										"{{server_ip}}"
+									],
+									"port": "{{server_port}}",
+									"path": [
+										"api",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "html",
+							"header": [
+								{
+									"key": "Server",
+									"value": "nginx"
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 09 Sep 2022 05:25:55 GMT"
+								},
+								{
+									"key": "Content-Type",
+									"value": "text/html; charset=UTF-8"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Vary",
+									"value": "Accept-Encoding"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "1; mode=block"
+								},
+								{
+									"key": "Content-Encoding",
+									"value": "gzip"
+								}
+							],
+							"cookie": [],
+							"body": "OK"
+						}
+					]
+				},
+				{
+					"name": "v-add-database",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_db_name', pm.variables.replaceIn('d{{$timestamp}}')); ",
+									"pm.collectionVariables.set('h_db_username', pm.variables.replaceIn('du{{$timestamp}}')); ",
+									"pm.collectionVariables.set('h_db_userpass', pm.variables.replaceIn('dp{{$timestamp}}')); "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_db_name', pm.variables.replaceIn('{{h_username}}_{{h_db_name}}')); ",
+									"pm.collectionVariables.set('h_db_username', pm.variables.replaceIn('{{h_username}}_{{h_db_username}}')); ",
+									"",
+									"pm.test(\"db name - \" + pm.collectionVariables.get('h_db_name'), function () {});",
+									"pm.test(\"db username - \" + pm.collectionVariables.get('h_db_username'), function () {});",
+									"pm.test(\"db password - \" + pm.collectionVariables.get('h_db_userpass'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-add-database",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_db_name}}",
+									"description": "database name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_db_username}}",
+									"description": "database user",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "{{h_db_userpass}}",
+									"description": "database user password",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-add-web-domain-php-ver",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_domain', pm.variables.replaceIn('d{{$timestamp}}.pm.instawp-testing.xyz')); ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"domain name - \" + pm.collectionVariables.get('h_domain'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-add-web-domain-php-ver",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{server_ip}}",
+									"description": "public IP",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "8.0",
+									"description": "php version",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "no",
+									"description": "restart",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-install-wordpress",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"db name - \" + pm.collectionVariables.get('h_db_name'), function () {});",
+									"pm.test(\"db username - \" + pm.collectionVariables.get('h_db_username'), function () {});",
+									"pm.test(\"db password - \" + pm.collectionVariables.get('h_db_userpass'), function () {});",
+									"",
+									"",
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-install-wordpress",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_db_name}}",
+									"description": "db name",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "{{h_db_username}}",
+									"description": "db user",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "{{h_db_userpass}}",
+									"description": "db password",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "u{{$timestamp}}",
+									"description": "admin_user",
+									"type": "text"
+								},
+								{
+									"key": "arg7",
+									"value": "u{{$timestamp}}",
+									"description": "admin_pass",
+									"type": "text"
+								},
+								{
+									"key": "arg8",
+									"value": "vikas@instawp.com",
+									"description": "admin_email",
+									"type": "text"
+								},
+								{
+									"key": "arg9",
+									"value": "6.1",
+									"description": "version",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-cmd-log",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_db_name', pm.variables.replaceIn('d{{$timestamp}}')); ",
+									"pm.collectionVariables.set('h_db_username', pm.variables.replaceIn('du{{$timestamp}}')); ",
+									"pm.collectionVariables.set('h_db_userpass', pm.variables.replaceIn('dp{{$timestamp}}')); "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_db_name', pm.variables.replaceIn('{{h_username}}_{{h_db_name}}')); ",
+									"pm.collectionVariables.set('h_db_username', pm.variables.replaceIn('{{h_username}}_{{h_db_username}}')); ",
+									"",
+									"pm.test(\"db name - \" + pm.collectionVariables.get('h_db_name'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-cmd-log",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "database name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "10",
+									"description": "database user",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "1",
+									"description": "database user password",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "json",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-set-php-multi-params",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-set-php-multi-params",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "memory_limit=32M",
+									"description": "php params comma seperated",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wordpress-localwp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//setting variables.",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.expect(pm.response.json().message.file).to.match(/\\.zip/);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wordpress-localwp",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wordpress-migrateguru",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"//setting variables.",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"file - \" + pm.response.json().message.file, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wordpress-migrateguru",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "vikas@instawp.com",
+									"description": "email",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-database-editor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"file - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().message).to.match(/instawp-sql-.*\\.php/);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-database-editor",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-add-user-ssh-key",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-add-user-ssh-key",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCmTWwwzAPNN62N9CG56kyB8fNOpGyrKyAwJZhbC3woR7yhfrN29Put40TFon+iBKNu1t7ciBfUE6nNpH6r+Z1CoJAvE/qQv1AolKHb5PPSpkrBmfAV6mWXkPbCCeqyCFsFXG9BiNbTIyZvYc7Gfy8TgmCgeNa6Vb0Lzgy7ArVddeJAB/uJORpQxU2arLwoFEN87IOo6E5YPpVEg0C6S1fipnwFksVb8tsMh7hr8WKyAfldpeRY0AJ6vmqBmAqA9rHrB1g3K+Gt/kbj4kgAZIiXUouZ3oGeTD1cTHXlGKFezJDr2VLQvDadG3Jdz1TPdfQZc9a3mrxnxXWDLjq0CULx visingha@VISINGHA-M-7246",
+									"description": "ssh key",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wordpress-git-private",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableUrlEncoding": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Callback",
+								"value": "https://webhook.site/1df33727-44bb-4712-bf73-83c8a44faa29",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "NlwVUk7wHbk5f9xJtn18WMbfJ_BVQEWa",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wordpress-git",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "juyicayifo7030",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "endly-fish-hizu.instawp.link",
+									"description": "ssh key",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "private",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "git@bitbucket.org:tangibleinc/tangible-datastream.git",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "master",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "0",
+									"type": "text"
+								},
+								{
+									"key": "arg7",
+									"value": "-----BEGIN OPENSSH PRIVATE KEY-----\nb3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABFwAAAAdzc2gtcn\nNhAAAAAwEAAQAAAQEAzQ5eLg8HAbheOP0ylw/dVCxk5hDqOn+FJIwqzsgIdc2rQZ81Q7f8\nfR2vxXy9Cfa01yVBnZ16f86fJ03PcXfjrQ3AWU8ZL2RYmsjSiSIHLar54kK9VDs3lCge5c\nCyCQCDWuxAEKp7Eed7xDTmKxZYvoHY0eYSop68NeiS3y/XLzKsxY050CSi1xOYIgtmFmDz\nW/ougpxUQDHEp++MOMF4wdpkJ1GCXTUVf1ME6FLg7Dmr1JhkiTui2BcwTc4LF0/LXPELPE\nDIbZTOGdR9ewbUsF7vdEFzWTkWwInKMzXcTeWKR+A0nteRiVNwoaH+Hf10qSTWZqfNQ2lP\n/HiX9G+bbQAAA+Al3P/EJdz/xAAAAAdzc2gtcnNhAAABAQDNDl4uDwcBuF44/TKXD91ULG\nTmEOo6f4UkjCrOyAh1zatBnzVDt/x9Ha/FfL0J9rTXJUGdnXp/zp8nTc9xd+OtDcBZTxkv\nZFiayNKJIgctqvniQr1UOzeUKB7lwLIJAINa7EAQqnsR53vENOYrFli+gdjR5hKinrw16J\nLfL9cvMqzFjTnQJKLXE5giC2YWYPNb+i6CnFRAMcSn74w4wXjB2mQnUYJdNRV/UwToUuDs\nOavUmGSJO6LYFzBNzgsXT8tc8Qs8QMhtlM4Z1H17BtSwXu90QXNZORbAicozNdxN5YpH4D\nSe15GJU3Chof4d/XSpJNZmp81DaU/8eJf0b5ttAAAAAwEAAQAAAQEAv+Y2VTxS/lUgOI0c\nDysVonR5aKVjzqMQYweZ+DJTWIvFPYBVRK6maCCkIll+QBjVXJLNOUfrIDip0QqMnE/qjk\nVUQUA4/ZUXJqPSA+wIc8CSYiC7NlzEwq5ZXAJdmvcT9r8ppW8mBbdwqEopLSGYo5C47JY3\n0mBjGsAw0xXed5dx4lHHRPFgp8WUezRYLYxf6gqlVQysYeJD58a0PF079ma+LPX6wmhitJ\n70N/BkCtkpLNJH4quRkKUoHqPM2kVkXkwVJSqbh75U3s6kRe2GsgnGLn6o6NefhLIxj5OO\nM0j9vnHCIHkGIBNrzLiTFZp5ef1cqWSutVxIwhBmdpRKAQAAAIAJ10sqdZl8jSgbqr9wDK\nMsSHpoQ2j8Xp/YqDyMqWySbLdt8Gnw/KLRaCVT3SSXLAeDJdne+qhe7f3dzTeQYItUGnXX\newConZqzrRPht5VWN/P7YtOunQBaBiFyd+UHcN5hpiG85wmKCO4DCGurvSaFlC6aXzIAwH\npkwBhhnIpJmwAAAIEA/f+K7kzew3v7biHKv49LQxDJWOXNOhnnwzJIZ543jNMo1de49mK1\nOKC3lK7R3LK0o+mkafERpU1VpAlKpnHDErA9M0C8MtK7uiy84RSlURv0f9z6rrf60Vv56U\nRSL3IzkLZI01Oz6KQnyzKwPEQ5lUsS75OA7myhiwdMqxB+KY0AAACBAM6sFNq0AYMn2FFE\nSQ0Zn5Mutp9I9Aca/dS9N8OJc91kRbbEQBNl9WXoAAdC6wC9B3XJNnFZY6hO1uHaLToljH\nW92PHOVur6fd1s881ES/1+8Va6vDofLdc26HELt/20g1avS62NNX83pHFB+v2uGTn1Rh2g\nVxrV//WVWStavZFhAAAAJEluc3Rhd3AgU1NIIEtleSAxIGZvciBHYWJyaWVsJ3MgVGVhbQ\nECAwQFBg==\n-----END OPENSSH PRIVATE KEY-----",
+									"type": "text"
+								},
+								{
+									"key": "arg8",
+									"value": "GIT_SSH_COMMAND=\"ssh -i /tmp/`whoami`-git-key -o IdentitiesOnly=yes\" composer install\nGIT_SSH_COMMAND=\"ssh -i /tmp/`whoami`-git-key -o IdentitiesOnly=yes\" composer update",
+									"type": "text"
+								},
+								{
+									"key": "arg9",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "arg10",
+									"value": "wp-content/plugins/tangible-datastream/",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "task_id",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://164.92.75.9:12124/api/api.php",
+							"protocol": "https",
+							"host": [
+								"164",
+								"92",
+								"75",
+								"9"
+							],
+							"port": "12124",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wordpress-git",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableUrlEncoding": false
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-Callback",
+								"value": "https://webhook.site/1df33727-44bb-4712-bf73-83c8a44faa29",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wordpress-git",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "ssh key",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "public",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "https://github.com/vikasprogrammer/instawp-github-integration-test.git",
+									"description": "git repo url (public/private)",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "master",
+									"description": "branch",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "0",
+									"description": "pr number",
+									"type": "text"
+								},
+								{
+									"key": "arg7",
+									"value": "key",
+									"description": "private key",
+									"type": "text"
+								},
+								{
+									"key": "arg8",
+									"value": "ls",
+									"description": "command",
+									"type": "text"
+								},
+								{
+									"key": "arg9",
+									"value": "no",
+									"description": "override url",
+									"type": "text"
+								},
+								{
+									"key": "arg10",
+									"value": "wp-content/plugins/dest-dir/",
+									"description": "dest folder",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "task_id",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-modify-map-domain",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('h_domain_alias', pm.variables.replaceIn('da{{$timestamp}}.pm.instawp-testing.xyz')); "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"domain alias name - \" + pm.collectionVariables.get('h_domain_alias'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-modify-map-domain",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_domain_alias}}",
+									"description": "alias domain",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-delete-web-domain-alias",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"domain alias name - \" + pm.collectionVariables.get('h_domain_alias'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-delete-web-domain-alias",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_domain_alias}}",
+									"description": "alias domain",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "yes",
+									"description": "restart",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-enable-disable-ssh",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().message).to.match(/ssh/);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-enable-disable-ssh",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "1",
+									"description": "1=enable, 0=disable",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-enable-disable-sftp",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().message).to.match(/sftp/);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-enable-disable-sftp",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "0",
+									"description": "0=disable, 1=enable",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-code-editor",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"file - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().message).to.match(/login.php\\?pw=\\w/);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-code-editor",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-web-domain-accesslog",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"file - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-web-domain-accesslog",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "10",
+									"description": "per_page",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "100",
+									"description": "page",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-web-domain-errorlog",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"file - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-web-domain-errorlog",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "10",
+									"description": "per_page",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "1",
+									"description": "page",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wordpress-backup",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"file - \" + pm.response.json().message.file, function () {});",
+									"pm.test(\"db - \" + pm.response.json().message.db, function () {});",
+									"",
+									"pm.collectionVariables.set('h_backup_file', pm.response.json().message.file); ",
+									"pm.collectionVariables.set('h_db_file', pm.response.json().message.db); ",
+									"",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wordpress-backup",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "1",
+									"description": "delete_existing",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "/backups/2022/11/db-d1668664728.pm.instawp-testing.xyz-Nov-17-2022-09-10-31.sql",
+									"description": "existing db path",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "/backups/2022/11/file-d1668664728.pm.instawp-testing.xyz-Nov-17-2022-09-10-31.tgz",
+									"description": "existing file path",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/api.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wordpress-restore",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.match(/has been restored/);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CALLBACK",
+								"value": "https://webhook.site/03d27fe5-b42b-467f-ba27-e255771b7741",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wordpress-restore",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_backup_file}}",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "{{h_db_file}}",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "{{h_db_name}}",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "{{h_db_username}}",
+									"type": "text"
+								},
+								{
+									"key": "arg7",
+									"value": "{{h_db_userpass}}",
+									"type": "text"
+								},
+								{
+									"key": "arg8",
+									"value": "wpadmin",
+									"type": "text"
+								},
+								{
+									"key": "arg9",
+									"value": "Password123$$",
+									"type": "text"
+								},
+								{
+									"key": "arg10",
+									"value": "admin@domain.com",
+									"type": "text"
+								},
+								{
+									"key": "arg11",
+									"value": "{{h_domain}}",
+									"type": "text"
+								},
+								{
+									"key": "arg12",
+									"value": "{{h_domain}}",
+									"type": "text"
+								},
+								{
+									"key": "arg13",
+									"value": "0",
+									"description": "disallow file modification",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "false",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "task_id",
+									"value": "123",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Background",
+			"item": [
+				{
+					"name": "v-add-user bg",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"user name - \" + pm.collectionVariables.get('h_username'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_username', pm.variables.replaceIn('u{{$timestamp}}')); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CALLBACK",
+								"value": "https://webhook.site/03d27fe5-b42b-467f-ba27-e255771b7741/",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-add-user",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "username",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "InstaWPPassword!123",
+									"description": "password",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "email@domain.com",
+									"description": "email",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "task_id",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "callback_url",
+									"value": "",
+									"type": "text",
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/index.php",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								"index.php"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-modify-map-domain bg",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('h_domain_alias', pm.variables.replaceIn('da{{$timestamp}}.pm.instawp-testing.xyz')); "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"domain alias name - \" + pm.collectionVariables.get('h_domain_alias'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CALLBACK",
+								"value": "https://webhook.site/03d27fe5-b42b-467f-ba27-e255771b7741",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-modify-map-domain",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_domain_alias}}",
+									"description": "alias domain",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "task_id",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-wp-extra-install bg",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.set('h_domain_alias', pm.variables.replaceIn('da{{$timestamp}}.pm.instawp-testing.xyz')); "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"domain alias name - \" + pm.collectionVariables.get('h_domain_alias'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CALLBACK",
+								"value": "https://webhook.site/beb57c67-9260-4479-a419-673b2cf92e65",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "HA2qQZnSO9sk-_vvgUqb3z2SbXUel2s5",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-wp-extra-install",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "corivicoye5947",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "us-gorilla-pexo.a.instawpsites.com",
+									"description": "domain name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "",
+									"description": "alias domain",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "task_id",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "https://github.com/InstaWP/instawp-connect/archive/refs/heads/main.zip?random=1672145244",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "arg7",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "arg8",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "arg9",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://159.89.164.182:14124/api/api.php",
+							"protocol": "https",
+							"host": [
+								"159",
+								"89",
+								"164",
+								"182"
+							],
+							"port": "14124",
+							"path": [
+								"api",
+								"api.php"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Stress",
+			"item": [
+				{
+					"name": "v-add-user Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"user name - \" + pm.collectionVariables.get('h_username'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_username', pm.variables.replaceIn('u{{$timestamp}}')); "
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-add-user",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "username",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "InstaWPPassword!123",
+									"description": "password",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "email@domain.com",
+									"description": "email",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-add-database Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_db_name', pm.variables.replaceIn('d{{$timestamp}}')); ",
+									"pm.collectionVariables.set('h_db_username', pm.variables.replaceIn('du{{$timestamp}}')); ",
+									"pm.collectionVariables.set('h_db_userpass', pm.variables.replaceIn('dp{{$timestamp}}')); "
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_db_name', pm.variables.replaceIn('{{h_username}}_{{h_db_name}}')); ",
+									"pm.collectionVariables.set('h_db_username', pm.variables.replaceIn('{{h_username}}_{{h_db_username}}')); ",
+									"",
+									"pm.test(\"db name - \" + pm.collectionVariables.get('h_db_name'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-add-database",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_db_name}}",
+									"description": "database name",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_db_username}}",
+									"description": "database user",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "{{h_db_userpass}}",
+									"description": "database user password",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-add-web-domain-php-ver Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									"pm.collectionVariables.set('h_domain', pm.variables.replaceIn('d{{$timestamp}}.pm.instawp-testing.xyz')); ",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"domain name - \" + pm.collectionVariables.get('h_domain'), function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-add-web-domain-php-ver",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{server_ip}}",
+									"description": "public IP",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "8.0",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "yes",
+									"description": "restart",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-instawp-install-wordpress Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"message - \" + pm.response.json().message, function () {});",
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-instawp-install-wordpress",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "{{h_username}}",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "arg2",
+									"value": "{{h_domain}}",
+									"description": "domain",
+									"type": "text"
+								},
+								{
+									"key": "arg3",
+									"value": "{{h_db_name}}",
+									"description": "db name",
+									"type": "text"
+								},
+								{
+									"key": "arg4",
+									"value": "{{h_db_username}}",
+									"description": "db user",
+									"type": "text"
+								},
+								{
+									"key": "arg5",
+									"value": "{{h_db_userpass}}",
+									"description": "db password",
+									"type": "text"
+								},
+								{
+									"key": "arg6",
+									"value": "u{{$timestamp}}",
+									"description": "admin_user",
+									"type": "text"
+								},
+								{
+									"key": "arg7",
+									"value": "u{{$timestamp}}",
+									"description": "admin_pass",
+									"type": "text"
+								},
+								{
+									"key": "arg8",
+									"value": "vikas@instawp.com",
+									"description": "admin_email",
+									"type": "text"
+								},
+								{
+									"key": "arg9",
+									"value": "6.0.1",
+									"description": "version",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "v-delete-user Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"response ok\", function () {",
+									"    pm.response.to.not.be.error;",
+									"    pm.expect(pm.response.json().success).to.eql(true);",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "X-CALLBACK",
+								"value": "https://webhook.site/03d27fe5-b42b-467f-ba27-e255771b7741",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "hash",
+									"value": "{{hash}}",
+									"type": "text"
+								},
+								{
+									"key": "cmd",
+									"value": "v-delete-user",
+									"type": "text"
+								},
+								{
+									"key": "arg1",
+									"value": "cikutibogi5201",
+									"description": "system user",
+									"type": "text"
+								},
+								{
+									"key": "returncode",
+									"value": "no",
+									"type": "text"
+								},
+								{
+									"key": "sync",
+									"value": "false",
+									"type": "text"
+								},
+								{
+									"key": "task_id",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "https://{{server_ip}}:{{server_port}}/api/",
+							"protocol": "https",
+							"host": [
+								"{{server_ip}}"
+							],
+							"port": "{{server_port}}",
+							"path": [
+								"api",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "v-instawp-add-web-domain-ssl",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"domain name - \" + pm.collectionVariables.get('h_domain'), function () {});",
+							"",
+							"pm.test(\"response ok\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.expect(pm.response.json().success).to.eql(true);",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "hash",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "cmd",
+							"value": "v-instawp-add-web-domain-ssl",
+							"type": "text"
+						},
+						{
+							"key": "arg1",
+							"value": "{{h_username}}",
+							"description": "system user",
+							"type": "text"
+						},
+						{
+							"key": "arg2",
+							"value": "{{h_domain}}",
+							"description": "domain",
+							"type": "text"
+						},
+						{
+							"key": "arg3",
+							"value": "{{ssl_cert}}",
+							"description": "ssl cert",
+							"type": "text"
+						},
+						{
+							"key": "arg4",
+							"value": "{{ssl_key}}",
+							"description": "ssl key",
+							"type": "text"
+						},
+						{
+							"key": "returncode",
+							"value": "no",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{server_ip}}:{{server_port}}/api/",
+					"protocol": "https",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "{{server_port}}",
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "v-delete-user",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"",
+							"pm.test(\"response ok\", function () {",
+							"    pm.response.to.not.be.error;",
+							"    pm.expect(pm.response.json().success).to.eql(true);",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "X-CALLBACK",
+						"value": "https://webhook.site/03d27fe5-b42b-467f-ba27-e255771b7741",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "hash",
+							"value": "{{hash}}",
+							"type": "text"
+						},
+						{
+							"key": "cmd",
+							"value": "v-delete-user",
+							"type": "text"
+						},
+						{
+							"key": "arg1",
+							"value": "cikutibogi5201",
+							"description": "system user",
+							"type": "text"
+						},
+						{
+							"key": "returncode",
+							"value": "no",
+							"type": "text"
+						},
+						{
+							"key": "sync",
+							"value": "false",
+							"type": "text"
+						},
+						{
+							"key": "task_id",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://{{server_ip}}:{{server_port}}/api/",
+					"protocol": "https",
+					"host": [
+						"{{server_ip}}"
+					],
+					"port": "{{server_port}}",
+					"path": [
+						"api",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hash",
+			"value": "s0ILrMKRHJ7_HaIgAAFZR5zRZZX81jIq",
+			"type": "string"
+		},
+		{
+			"key": "server_ip",
+			"value": "128.199.29.185",
+			"type": "string"
+		},
+		{
+			"key": "server_port",
+			"value": "14124",
+			"type": "string"
+		},
+		{
+			"key": "h_username",
+			"value": ""
+		},
+		{
+			"key": "h_db_name",
+			"value": ""
+		},
+		{
+			"key": "h_db_username",
+			"value": ""
+		},
+		{
+			"key": "h_db_userpass",
+			"value": ""
+		},
+		{
+			"key": "h_domain",
+			"value": ""
+		},
+		{
+			"key": "ssl_key",
+			"value": "aaa"
+		},
+		{
+			"key": "ssl_cert",
+			"value": "aa"
+		},
+		{
+			"key": "h_backup_file",
+			"value": ""
+		},
+		{
+			"key": "h_db_file",
+			"value": ""
+		},
+		{
+			"key": "h_domain_alias",
+			"value": ""
+		}
+	]
+}

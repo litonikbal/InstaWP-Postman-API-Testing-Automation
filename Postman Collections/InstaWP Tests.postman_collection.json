@@ -1,0 +1,537 @@
+{
+	"info": {
+		"_postman_id": "d8255311-5f01-4a5b-98cd-ffd3b5be3295",
+		"name": "InstaWP Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24176729"
+	},
+	"item": [
+		{
+			"name": "Site Creation",
+			"item": [
+				{
+					"name": "List Teams Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"        pm.environment.set(\"team_id\", jsonData.data[_.random(0,jsonData.data.length-1)].id);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									"\r",
+									"//display total teams\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(`Total Teams are: ${jsonData.data.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/teams",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Templates * Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"template_slug\", jsonData.data[_.random(0,jsonData.data.length-1)].slug);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"\r",
+									"//display total teams\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(`Total Templates are: ${jsonData.data.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/templates",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"templates"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "private",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "team_id",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "site_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "request_type",
+									"value": "add_site",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Configurations * Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    pm.environment.set(\"config_id\",jsonData.data.configs[_.random(0, jsonData.data.configs.length-1)].id );\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"\r",
+									"//show total configs id\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(`the total number of configs are: ${jsonData.data.configs.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/configurations",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Site Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"let wp = [\"3.7\",\"3.8\",\"3.9\",\"4.0\",\"4.1\",\"4.2\",\"4.3\",\"4.4\",\"4.5\",\"4.6\",\"4.7\",\"4.8\",\"4.9\",\"5.0\",\"5.1\",\"5.2\",\"5.3\",\"5.4\",\"5.5\",\"5.6\",\"5.7\",\"5.8\",\"5.9\",\"6.0.2\"]\r",
+									"let php=[\"5.6\",\"7.0\",\"7.1\",\"7.2\",\"7.3\",\"7.4\",\"8.0\",\"8.1\"]\r",
+									"\r",
+									"pm.environment.set(\"wp\", wp[_.random(0, wp.length-1)]);\r",
+									"pm.environment.set(\"php_v\", php[_.random(0, php.length-1)]);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"site_name\": \"{{site_name}}\",\r\n    \"wp_version\": \"{{wp}}\", \r\n    \"php_version\": \"{{php_v}}\", \r\n    \"config_id\":\"{{config_id}}\", \r\n    \"team_id\":\"{{team_id}}\",\r\n    \"is_reserved\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Site (From Template) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"template_slug\": \"{{template_slug}}\",\r\n    \"site_name\": \"{{site_name}}\", \r\n    \"is_reserved\" : false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/template",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"template"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Site (Template + Git) Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"template_slug\": \"{{template_slug}}\", \r\n    \"site_name\": \"{{site_name}}\", \r\n    \"pr_num\": \"432\", \r\n    \"repo_id\": \"4324\", \r\n    \"override_url\":\"https://lincolnb17@bitbucket.org/lincolnb17/testrepo.git\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/git",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"git"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

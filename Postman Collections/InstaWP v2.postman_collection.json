@@ -1,0 +1,4244 @@
+{
+	"info": {
+		"_postman_id": "eb3432de-03e3-463e-80f6-6511965b6530",
+		"name": "InstaWP v2",
+		"description": "# Welcome to InstaWP API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24176729"
+	},
+	"item": [
+		{
+			"name": "Site Management",
+			"item": [
+				{
+					"name": "Create Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"let wp = [\"3.7\",\"3.8\",\"3.9\",\"4.0\",\"4.1\",\"4.2\",\"4.3\",\"4.4\",\"4.5\",\"4.6\",\"4.7\",\"4.8\",\"4.9\",\"5.0\",\"5.1\",\"5.2\",\"5.3\",\"5.4\",\"5.5\",\"5.6\",\"5.7\",\"5.8\",\"5.9\",\"6.0.2\"]\r",
+									"let php=[\"5.6\",\"7.0\",\"7.1\",\"7.2\",\"7.3\",\"7.4\",\"8.0\",\"8.1\"]\r",
+									"\r",
+									"pm.environment.set(\"wp\", wp[_.random(0, wp.length-1)]);\r",
+									"pm.environment.set(\"php_v\", php[_.random(0, php.length-1)]);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"site_name\": \"{{site_name}}\",\r\n    \"wp_version\": \"{{wp}}\", \r\n    \"php_version\": \"{{php_v}}\", \r\n    \"config_id\":\"{{config_id}}\", \r\n    \"team_id\":\"{{team_id}}\",\r\n    \"is_reserved\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Site (From Template)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"template_slug\": \"{{template_slug}}\",\r\n    \"site_name\": \"{{site_name}}\", \r\n    \"is_reserved\" : {{$randomBoolean}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/template",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"template"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Site (Template + Git)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"template_slug\": \"{{template_slug}}\", \r\n    \"site_name\": \"{{site_name}}\", \r\n    \"pr_num\": \"\", \r\n    \"repo_id\": \"\", \r\n    \"override_url\":\"{{purl}}\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/git",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"git"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Shared Template Site (From Template)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"pm.test(\"check site\", function () {\r",
+									"    pm.expect(jsonData.data.wp_url).to.eql(`https://${pm.variables.get(\"site_name\")}.blr3.instawp-testing.xyz`);\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"template_slug\": \"testtetststs\",\r\n    \"email\": \"demo@demo.com\",\r\n    \"is_shared\":true,\r\n    \"has_subscribed\":true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/template",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"template"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "List Sites",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"page\", _.random(1, 100))\r",
+									"pm.environment.set(\"per_page\", _.random(1, 100))"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"siteId\",jsonData.data[_.random(0,`${jsonData.meta.total}-1`)].id);\r",
+									"\r",
+									"\r",
+									"    \r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"    if (jsonData.status == true) {\r",
+									"    pm.test(`The total number of sites are: ${jsonData.data.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites"
+							],
+							"query": [
+								{
+									"key": "term",
+									"value": "abc",
+									"disabled": true
+								},
+								{
+									"key": "type",
+									"value": "active",
+									"disabled": true
+								},
+								{
+									"key": "tags",
+									"value": "1234,1224",
+									"disabled": true
+								},
+								{
+									"key": "members",
+									"value": "123,1234",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "{{page}}",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "{{per_page}}",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Site Object",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let wp1=( _.random(3, 6))\r",
+									"let wp2=(_.random(0, 9))\r",
+									"let php1=( _.random(5, 8))\r",
+									"let php2=(_.random(0, 6))\r",
+									"pm.environment.set(\"wp\", `${wp1}.${wp2}`)\r",
+									"pm.environment.set(\"php_v\", `${php1}.${php2}`)\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"php\" : { \n        \"configurations\":{\n            \"max_execution_time\": {{$randomInt}},\n            \"max_input_time\":{{$randomInt}},\n            \"max_input_vars\":{{$randomInt}},\n            \"memory_limit\":{{$randomInt}},\n            \"allow_url_fopen\":{{$randomInt}},\n            \"post_max_size\":{{$randomInt}},\n            \"upload_max_filesize\":{{$randomInt}},\n            \"session.gc_maxlifetime\":{{$randomInt}}\n        },\n        \"version\": {{php_v}}\n    },\n    \"wordpress\" : {\n        \"configurations\":{\n            \"WP_DEBUG\": {{boolean}},\n            \"WP_AUTO_UPDATE_CORE\": {{boolean}},\n            \"AUTOMATIC_UPDATER_DISABLED\": {{boolean}}\n        },\n        \"search_engine_indexing\": true,\n        \"version\": {{wp}},\n        \"language\":\"hi_IN\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle Reserve *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// 200 test ",
+									"// basic string based",
+									"// negative - 403",
+									"// negative - invalid pass - 500. ",
+									"",
+									"",
+									"",
+									"var jsonData=pm.response.json();",
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"if(jsonData.status==false){",
+									"pm.test(jsonData.message, function () {",
+									"    pm.expect(jsonData.status).to.eql(true);",
+									"});",
+									"}",
+									"if(jsonData.status==true){",
+									"pm.test(jsonData.message, function () {",
+									"    pm.expect(jsonData.status).to.eql(true);",
+									"});",
+									"",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/reserve-toggle",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"reserve-toggle"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clone Site *",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"site_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"site_name\": \"{{site_id}}\",\n    \"is_reserved\": {{boolean}}\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/clone",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"clone"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Site *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Install Plugins or Themes *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let pslug=[\"pods\",\"gutenbee\",\"recipe-card-blocks-by-wpzoom\",\"emailoctopus\",\"classic-editor\",\"akismet\",\"jetpack\",\"classic-widgets\",\"two-factor\"]\r",
+									"let tslug=[\"hello-elementor\",\"astra\",\"oceanwp\",\"kadence\",\"neve\",\"popularfx\",\"blocksy\",\"hestia\",\"colibri-wp\",\"sydney\"]\r",
+									"let turl=[\r",
+									"    \"https://downloads.wordpress.org/theme/astra.3.9.4.zip\",\r",
+									"    \"https://downloads.wordpress.org/theme/oceanwp.3.3.6.zip\",\r",
+									"    \"https://downloads.wordpress.org/theme/hello-elementor.2.6.1.zip\",\r",
+									"    \"https://downloads.wordpress.org/theme/popularfx.1.2.4.zip\",\r",
+									"    \"https://downloads.wordpress.org/theme/newspaperex.0.8.zip\"\r",
+									"]\r",
+									"let purl=[\r",
+									"    \"https://downloads.wordpress.org/plugin/social-share-buttons-lite.zip\",\r",
+									"    \"https://downloads.wordpress.org/plugin/wp-seopress.6.1.2.zip\",\r",
+									"    \"https://downloads.wordpress.org/plugin/abcsubmit.1.2.4.zip\",\r",
+									"    \"https://downloads.wordpress.org/plugin/copy-delete-posts.1.3.6.zip\",\r",
+									"    \"https://downloads.wordpress.org/plugin/classic-widgets.0.3.zip\"\r",
+									"]\r",
+									"pm.environment.set(\"pslug\", pslug[_.random(0, pslug.length-1)]);\r",
+									"pm.environment.set(\"tslug\", tslug[_.random(0, tslug.length-1)]);\r",
+									"pm.environment.set(\"purl\", purl[_.random(0, purl.length-1)]);\r",
+									"pm.environment.set(\"turl\", turl[_.random(0, turl.length-1)]);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plugin_slugs\": \"{{pslug}}\",\n    \"theme_slugs\": \"{{tslug}}\",\n    \"plugin_urls\": \"{{purl}}\",\n    \"theme_urls\": \"{{turl}}\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/install-content",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"install-content"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Restore Site Version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/restore-versions/:site_version_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"restore-versions",
+								":site_version_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "557"
+								},
+								{
+									"key": "site_version_id",
+									"value": "17"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Map Domain (coming soon)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"domain_name\": \"new-name.com\"\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/map-domain",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"map-domain"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Map Domain (coming soon)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/map-domain",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"map-domain"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get SFTP/SSH Password (coming soon)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/ssh-password",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"ssh-password"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle FTP (SSH Key)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/ftp-toggle",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"ftp-toggle"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Toggle SSH",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/ssh-toggle",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"ssh-toggle"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								}
+							]
+						},
+						"description": "SSH Documentation"
+					},
+					"response": []
+				},
+				{
+					"name": "Execute Command",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \n    \"commandArguments\": [\n        {\n            \"parameters\": [\n                {\n                    \"searchValue\": \"replacewith\",\n                    \"replaceValue\": \"replace1\"\n                },\n                {\n                    \"searchValue\": \"replacewith\",\n                    \"replaceValue\": \"replace1\"\n                }\n            ]\n        },\n        {\n            \"parameters\": [\n                {\n                    \"searchValue\": \"search\",\n                    \"replaceValue\": \"search2\"\n                },\n                {\n                    \"searchValue\": \"search\",\n                    \"replaceValue\": \"replace2\"\n                    \n                }\n            ]\n        },\n        {\n            \"parameters\": [\n                {\n                    \"searchValue\": \"search\",\n                    \"replaceValue\": \"search3\"\n                },\n                {\n                    \"searchValue\": \"search\",\n                    \"replaceValue\": \"replace3\"\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/execute-command",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"execute-command"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Team Management",
+			"item": [
+				{
+					"name": "List Teams",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"        pm.environment.set(\"team_id\", jsonData.data[_.random(0,jsonData.data.length-1)].id);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									"\r",
+									"//display total teams\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(`Total Teams are: ${jsonData.data.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/teams",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "X-localization",
+								"value": "es",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/teams",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams"
+							]
+						},
+						"description": "##### Payload Description\n\n| **Parameter** | **Required** | **Type** | **Default Value** | **Additional information** |\n| --- | --- | --- | --- | --- |\n| name | Yes | String | N/A | The length of team name should be between 3 and 255. |"
+					},
+					"response": [
+						{
+							"name": "Create Team",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "X-localization",
+										"value": "es",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"test\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "https://s.instawp.io/api/v1/teams",
+									"protocol": "https",
+									"host": [
+										"s",
+										"instawp",
+										"io"
+									],
+									"path": [
+										"api",
+										"v1",
+										"teams"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"Team created successfully.\",\n    \"data\": {\n        \"id\": 205\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update team",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "abc upated",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/teams/121",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "update team",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "name",
+											"value": "abc",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{api_url}}/teams/121",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										"teams",
+										"121"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": null,
+							"cookie": [],
+							"body": "{\n    \"status\": true,\n    \"message\": \"site created successfully.\",\n    \"data\": {\n        \"id\": 121,\n        \"sub_domain\": \"abc.instawp.io\",\n        \"wp_version\": \"5.9\",\n        \"php_version\": \"8.0\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete a team",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/teams/121",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add team member",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "sachin@instawp.com",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "admin",
+									"description": "admin, member",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/teams/121/members",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121",
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "All Team members",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/teams/:team_id/members",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								":team_id",
+								"members"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "{{team_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove team member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "sachin@instawp.com",
+									"type": "text"
+								},
+								{
+									"key": "role",
+									"value": "admin",
+									"description": "admin, member",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/teams/121/members/2",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121",
+								"members",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update member role",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "role",
+									"value": "admin",
+									"description": "admin, member",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{api_url}}/teams/121/members/2",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121",
+								"members",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Switch team",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/teams/121/switch",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121",
+								"switch"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable white label",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/teams/121/white-label/enable",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121",
+								"white-label",
+								"enable"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Disable white label",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/teams/121/white-label/disable",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								"121",
+								"white-label",
+								"disable"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tags",
+			"item": [
+				{
+					"name": "Add a tag to site",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"php7\",\n    \"color_code\":\"text-warning-1100 bg-warning-50\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/tags",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"tags"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Tags *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"\r",
+									"    if (jsonData.status == true) {\r",
+									"    pm.test(`The total number of tags are: ${jsonData.data.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/teams/:team_id/tags",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"teams",
+								":team_id",
+								"tags"
+							],
+							"variable": [
+								{
+									"key": "team_id",
+									"value": "{{team_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove tag from site",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\":\"php7\",\n    \"color_code\":\"text-warning-1100 bg-warning-50\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/tags/:tag_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"tags",
+								":tag_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								},
+								{
+									"key": "tag_id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Assign tag to site",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/tags/:tag_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"tags",
+								":tag_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": "{{site_id}}"
+								},
+								{
+									"key": "tag_id",
+									"value": "{{tag_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Configurations Management",
+			"item": [
+				{
+					"name": "List Configurations *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"    pm.environment.set(\"config_id\",jsonData.data.configs[_.random(0, jsonData.data.configs.length-1)].id );\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"\r",
+									"//show total configs id\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(`the total number of configs are: ${jsonData.data.configs.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/configurations",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create configurations",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"wp_version\": 5.9\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/configurations",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configurations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update configurations",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"another name\",\n    \"wp_version\": 5.9\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/configurations/:config_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configurations",
+								":config_id"
+							],
+							"variable": [
+								{
+									"key": "config_id",
+									"value": "{{config_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "clone configurations",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"another name\",\n    \"wp_version\": 5.9\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/configurations/:config_id/clone",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configurations",
+								":config_id",
+								"clone"
+							],
+							"variable": [
+								{
+									"key": "config_id",
+									"value": "{{config_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete configurations",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/configurations/:config_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"configurations",
+								":config_id"
+							],
+							"variable": [
+								{
+									"key": "config_id",
+									"value": "{{config_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Template Management",
+			"item": [
+				{
+					"name": "templates statistics",
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "umgsPPXbwP9VnVjnt3wJji8OnUtz35zT9EZSZ4Xe",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/templates/statistics",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"templates",
+								"statistics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Templates *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"template_slug\", jsonData.data[_.random(0,jsonData.data.length-1)].slug);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"\r",
+									"//display total teams\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(`Total Templates are: ${jsonData.data.length}`, function () {\r",
+									"        \r",
+									"    });\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/templates",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"templates"
+							],
+							"query": [
+								{
+									"key": "type",
+									"value": "private",
+									"disabled": true
+								},
+								{
+									"key": "per_page",
+									"value": "5",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "team_id",
+									"value": "4",
+									"disabled": true
+								},
+								{
+									"key": "site_id",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "request_type",
+									"value": "add_site",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Template *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"    pm.environment.set(\"template_id\", jsonData.data.template.id);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(1);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(1);\r",
+									"});\r",
+									"\r",
+									"}\r",
+									"//check template name\r",
+									"if(jsonData.status==1){\r",
+									"pm.test(\"check template name\", function () {\r",
+									"    pm.expect(jsonData.data.template.name).to.eql(pm.variables.get(\"template_name\"));\r",
+									"\r",
+									"});\r",
+									"}\r",
+									"//check template description\r",
+									"if(jsonData.status==1){\r",
+									"pm.test(\"check template description\", function () {\r",
+									"    pm.expect(jsonData.data.template.display_text).to.eql(pm.variables.get(\"template_desc\"));\r",
+									"\r",
+									"});\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"template_name\", pm.variables.replaceIn(\"{{$randomFirstName}}\").toLowerCase())\r",
+									"pm.environment.set(\"template_desc\", pm.variables.replaceIn(\"{{$randomLoremText}}\").toLowerCase())"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"{{template_name}}\",\n\t\"site_id\": \"{{siteId}}\",\n\t\"description\": \"{{template_desc}}\",\n\t\"instant_template\": \"{{boolean}}\",\n\t\"mark_as_public\":\"{{boolean}}\",\n\t\"slug\": \"Lincoln\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/templates",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"templates"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Template *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/templates/:template_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"templates",
+								":template_id"
+							],
+							"variable": [
+								{
+									"key": "template_id",
+									"value": "{{template_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Move Shared Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/templates/:template_id/move-sites/:site_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"templates",
+								":template_id",
+								"move-sites",
+								":site_id"
+							],
+							"variable": [
+								{
+									"key": "template_id",
+									"value": "11"
+								},
+								{
+									"key": "site_id",
+									"value": "111"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "General",
+			"item": [
+				{
+					"name": "Get Task Status *",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/tasks/{{task_id}}/status",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"tasks",
+								"{{task_id}}",
+								"status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Versions *",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/versions",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Object *",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_url}}/me",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Site Versions",
+			"item": [
+				{
+					"name": "Create Version",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"site_id\":{{siteId}}\r\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site-versions",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site-versions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Version",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\":\"$5&asda asd@asd\"\r\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site-versions/:id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site-versions",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{siteId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Versions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/site-versions?site_id={{siteId}}",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site-versions"
+							],
+							"query": [
+								{
+									"key": "site_id",
+									"value": "{{siteId}}"
+								},
+								{
+									"key": "per_page",
+									"value": "10",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Versions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"ids\":[]\r\n}"
+						},
+						"url": {
+							"raw": "{{api_url}}/site-versions",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"site-versions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SSH",
+			"item": [
+				{
+					"name": "Add SSH Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"label\":\"{{$randomFullName}}\",\n    \"ssh_key\":\"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCzIIwReOQh3aslfb5d5a95wM8toetwlDyK52HqEYizyZmWiy5sgA2C3vR4xJfUbZY1ggK9gw4u7kJ2frFOJnEx1byvFcxRzDxXJBkynVINxMcFV+WlKXbRJ1m5FjpaBTha6/vymlsFnXlZ2On1bxVmPvIejKOl7qBOKRxjcx4bSlL+zq7xVxjp2b9Gl1v2Rob0WooVgXgd9sGpeT5xRD3bZDZeMOq7JwTdW0sdX4hpHtiL8plOGvqg2Bx18WS5NFF4afND3ze0pWfJL/EZ7gV7I1RNNFo/AbSjJrDlv7O2xmQfWFy3cny+JCemogwx+2pJGpu09fCMoLUms14+cYGUwdVvfEKLVtrmE/9cYorpBxp9+Yo6vrt9BXMvpgzZB7sfrE3t0+Dtu7eaAdNhZWDeRP1N5obBTiudxR4aq42WXiCLyEO4Ei02v7c48XbS2gTQDa2tf9MDDOr9xIyp/C+RQ/DZ6nrmpacYhzAySZOyoEJBWPGLfvIfKFZ14aArvjs= test@testss-tes-test.tests\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/ssh-keys",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"ssh-keys"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List SSH Keys",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"    pm.environment.set(\"ssh_id\", jsonData.data[_.random(0,jsonData.meta.total_count)].id);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/ssh-keys",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"ssh-keys"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete SSH Key",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/ssh-keys/:id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"ssh-keys",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "{{ssh_id}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable/Disable SSH (multiple ssh)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"{1or0}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/{:site_id}/update-ssh-status",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"{:site_id}",
+								"update-ssh-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Enable/Disable FTP (multiple ssh)",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"status\":\"{1or0}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/{:site_id}/update-sftp-status",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								"{:site_id}",
+								"update-sftp-status"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add SSH to Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"key_id\": 123\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/ssh-keys/:key_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"ssh-keys",
+								":key_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": null
+								},
+								{
+									"key": "key_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove SSH Key from Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData=pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(jsonData.status==false){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"}\r",
+									"if(jsonData.status==true){\r",
+									"pm.test(jsonData.message, function () {\r",
+									"    pm.expect(jsonData.status).to.eql(true);\r",
+									"});\r",
+									"\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{api_url}}/sites/:site_id/ssh-keys/:key_id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"sites",
+								":site_id",
+								"ssh-keys",
+								":key_id"
+							],
+							"variable": [
+								{
+									"key": "site_id",
+									"value": null
+								},
+								{
+									"key": "key_id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commands",
+			"item": [
+				{
+					"name": "Create Command",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let wp = [\"3.7\",\"3.8\",\"3.9\",\"4.0\",\"4.1\",\"4.2\",\"4.3\",\"4.4\",\"4.5\",\"4.6\",\"4.7\",\"4.8\",\"4.9\",\"5.0\",\"5.1\",\"5.2\",\"5.3\",\"5.4\",\"5.5\",\"5.6\",\"5.7\",\"5.8\",\"5.9\",\"6.0.2\"]\r",
+									"let php=[\"5.6\",\"7.0\",\"7.1\",\"7.2\",\"7.3\",\"7.4\",\"8.0\",\"8.1\"]\r",
+									"\r",
+									"pm.environment.set(\"wp\", wp[_.random(0, wp.length-1)]);\r",
+									"pm.environment.set(\"php_v\", php[_.random(0, php.length-1)]);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{$randomFullName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/commands",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"commands"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Import Command",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let wp = [\"3.7\",\"3.8\",\"3.9\",\"4.0\",\"4.1\",\"4.2\",\"4.3\",\"4.4\",\"4.5\",\"4.6\",\"4.7\",\"4.8\",\"4.9\",\"5.0\",\"5.1\",\"5.2\",\"5.3\",\"5.4\",\"5.5\",\"5.6\",\"5.7\",\"5.8\",\"5.9\",\"6.0.2\"]\r",
+									"let php=[\"5.6\",\"7.0\",\"7.1\",\"7.2\",\"7.3\",\"7.4\",\"8.0\",\"8.1\"]\r",
+									"\r",
+									"pm.environment.set(\"wp\", wp[_.random(0, wp.length-1)]);\r",
+									"pm.environment.set(\"php_v\", php[_.random(0, php.length-1)]);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"command_library_id\": \"{{command_library_id}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/import-commands",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"import-commands"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "List Commands",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/commands",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"commands"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "List Command Library",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/library-commands",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"library-commands"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Command",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"{{name}}\",\r\n    \"command\": \"{{command}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/commands/:id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"commands",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "30"
+								}
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Command",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/commands/:id",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"commands",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "30"
+								}
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Static Data",
+			"item": [
+				{
+					"name": "List Countries",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/static-data/countries",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"static-data",
+								"countries"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "List States",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/static-data/countries/:country_id/states",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"static-data",
+								"countries",
+								":country_id",
+								"states"
+							],
+							"variable": [
+								{
+									"key": "country_id",
+									"value": "101"
+								}
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				},
+				{
+					"name": "List Cities",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/static-data/states/:state_id/cities",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"static-data",
+								"states",
+								":state_id",
+								"cities"
+							],
+							"variable": [
+								{
+									"key": "state_id",
+									"value": "4047"
+								}
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plans",
+			"item": [
+				{
+					"name": "Feature Availability",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if (jsonData.status == false) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"}\r",
+									"if (jsonData.status == true) {\r",
+									"    pm.test(jsonData.message, function () {\r",
+									"        pm.expect(jsonData.status).to.eql(true);\r",
+									"    });\r",
+									"\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_url}}/get-feature-availability",
+							"host": [
+								"{{api_url}}"
+							],
+							"path": [
+								"get-feature-availability"
+							]
+						},
+						"description": "Following option are available in the POST body.\n\n1. wp_version\n2. php_version\n    \n\nPlease note that you can supply all or none of these options and you can even provide partial options for different style of site creations.\n\nExamples:\n\n1. Blank site without any options."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Monetize",
+			"item": [
+				{
+					"name": "Product",
+					"item": [
+						{
+							"name": "Store Product",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": \"100\",\n    \"is_paid\": true,\n    \"is_monetized\": true,\n    \"template_id\": 15,\n    \"payment_type\": \"one_time\",\n    \"payment_interval\": \"\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/:resource_type/products",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										":resource_type",
+										"products"
+									],
+									"variable": [
+										{
+											"key": "resource_type",
+											"value": "{{resource_type}}",
+											"description": "Parent resource model (template or site)."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Product",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"price\": 110,\n    \"is_paid\": true,\n    \"is_monetized\": true,\n    \"template_id\": 15,\n    \"payment_type\": \"recurring\",\n    \"payment_interval\": \"monthly\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{api_url}}/:resource_type/products/:resource_id",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										":resource_type",
+										"products",
+										":resource_id"
+									],
+									"variable": [
+										{
+											"key": "resource_type",
+											"value": "{{resource_type}}",
+											"description": "Parent resource model (template or site)."
+										},
+										{
+											"key": "resource_id",
+											"value": "{{resource_id}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Product Details",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{api_url}}/:resource_type/products/:resource_id",
+									"host": [
+										"{{api_url}}"
+									],
+									"path": [
+										":resource_type",
+										"products",
+										":resource_id"
+									],
+									"variable": [
+										{
+											"key": "resource_type",
+											"value": null,
+											"description": "Parent resource model (template or site)."
+										},
+										{
+											"key": "resource_id",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
