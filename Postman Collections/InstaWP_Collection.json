@@ -1,0 +1,780 @@
+{
+	"info": {
+		"_postman_id": "dc858ab6-cb64-4d47-8540-2a6ae97a443b",
+		"name": "Instawp Collections-Site",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create temp site with name",
+			"item": [
+				{
+					"name": "Create Site (From Scratch)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "745f5fa9-629b-4e0d-b6d1-e77766a31582",
+								"exec": [
+									"var random=Math.random().toString(32).substring(2);\r",
+									"var sitename=random;\r",
+									"console.log(sitename)\r",
+									"pm.environment.set(\"site_name_env\",\"sitename\");\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "324925f0-23ac-47f7-85cb-9f903837383a",
+								"exec": [
+									"var jasonData=JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is above 500ms\", () =>{\r",
+									"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Status is true',() =>{\r",
+									"    pm.expect(jasonData.status).to.eql(true);\r",
+									"})\r",
+									"\r",
+									"pm.test('message is showing',() =>{\r",
+									"    pm.expect(jasonData.message).to.eql(\"Site installation work in completed, Your website is ready!\");\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"site_id_env\",jasonData.data.id);\r",
+									"pm.environment.set(\"wp_url_env\",jasonData.data.wp_url);\r",
+									"pm.environment.set(\"wp_username_env\",jasonData.data.wp_username);\r",
+									"pm.environment.set(\"wp_password_env\",jasonData.data.wp_password);\r",
+									"\r",
+									"var jsonshema={\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"boolean\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"message\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"task_id\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"status\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"wp_url\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"wp_username\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"wp_password\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"s_hash\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"token\": {\r",
+									"          \"type\": \"null\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"message\",\r",
+									"        \"task_id\",\r",
+									"        \"status\",\r",
+									"        \"wp_url\",\r",
+									"        \"wp_username\",\r",
+									"        \"wp_password\",\r",
+									"        \"id\",\r",
+									"        \"s_hash\",\r",
+									"        \"token\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test(\"validating wheather response body details are as per Scheme\", () =>{\r",
+									"\r",
+									"    pm.expect(tv4.validate(jasonData,jsonshema)).to.eql(true);\r",
+									"})\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "d76393e2-1754-4dfe-9e3b-1caeb8f28eeb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_reserved\":false,\r\n    \"php_version\":\"7.4\",\r\n    \"site_name\":\"{{\"site_name_env\"}}\",\r\n    \"wp_version\":\"6.0\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v2/sites"
+					},
+					"response": []
+				},
+				{
+					"name": "List of sites",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "d597af51-10ca-4292-bd27-b57d52c133ba",
+								"exec": [
+									"var jasonData=JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is above 200ms\", () =>{\r",
+									"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Status is true',() =>{\r",
+									"    pm.expect(jasonData.status).to.eql(true);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "218cf88b-cd1e-4f85-a8b9-5ead99c39d78",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": "{{URL}}/api/v2/sites"
+					},
+					"response": []
+				},
+				{
+					"name": "List of sites-with Page and number of pages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e616d57f-4730-4ce5-8cc9-32a457633ded",
+								"exec": [
+									"var jasonData=JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is above 500ms\", () =>{\r",
+									"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Status is true',() =>{\r",
+									"    pm.expect(jasonData.status).to.eql(true);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "4d0e7728-e7a6-4e5b-a2d3-4441d0165dd1",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/v2/sites?page=1&per_page=10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"sites"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Clone Site",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "21246b35-4738-40d9-bae7-b3024a8045a8",
+								"exec": [
+									"var random=Math.random().toString(32).substring(2);\r",
+									"var clone_sitename=random\r",
+									"console.log(clone_sitename)\r",
+									"pm.environment.set(\"clone_sitename_env\",clone_sitename)"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "67fccebb-1b17-4a93-b0f0-4307083bae55",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"site_name\": \"clone_sitename_env\",\r\n     \"is_reserved\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v2/sites/4174/clone"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b09cf3bd-dcdd-4dc0-b715-6c2fda6b17f7",
+								"exec": [
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.environment.unset(\"site_id_env\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "bf51f079-5347-4fb0-b90f-619fc4f440eb",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/api/v2/sites/{{site_id_env}}"
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "7f6aa011-193b-4e88-9583-df5b8a61fe91"
+		},
+		{
+			"name": "Create Reserved site with name Copy",
+			"item": [
+				{
+					"name": "Create Site (From Scratch)-Reserved",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "745f5fa9-629b-4e0d-b6d1-e77766a31582",
+								"exec": [
+									"var random=Math.random().toString(32).substring(2);\r",
+									"var sitename=random;\r",
+									"console.log(sitename)\r",
+									"pm.environment.set(\"site_name_env\",\"sitename\");\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "324925f0-23ac-47f7-85cb-9f903837383a",
+								"exec": [
+									"var jasonData=JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Status is true',() =>{\r",
+									"    pm.expect(jasonData.status).to.eql(true);\r",
+									"})\r",
+									"\r",
+									"pm.test('message is showing',() =>{\r",
+									"    pm.expect(jasonData.message).to.eql(\"Site installation work in completed, Your website is ready!\");\r",
+									"})\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"site_id_env\",jasonData.data.id);\r",
+									"pm.environment.set(\"wp_url_env\",jasonData.data.wp_url);\r",
+									"pm.environment.set(\"wp_username_env\",jasonData.data.wp_username);\r",
+									"pm.environment.set(\"wp_password_env\",jasonData.data.wp_password);\r",
+									"\r",
+									"\r",
+									"var jsonshema={\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"status\": {\r",
+									"      \"type\": \"boolean\"\r",
+									"    },\r",
+									"    \"message\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"data\": {\r",
+									"      \"type\": \"object\",\r",
+									"      \"properties\": {\r",
+									"        \"message\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"task_id\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"status\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"wp_url\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"wp_username\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"wp_password\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"id\": {\r",
+									"          \"type\": \"integer\"\r",
+									"        },\r",
+									"        \"s_hash\": {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        \"token\": {\r",
+									"          \"type\": \"null\"\r",
+									"        }\r",
+									"      },\r",
+									"      \"required\": [\r",
+									"        \"message\",\r",
+									"        \"task_id\",\r",
+									"        \"status\",\r",
+									"        \"wp_url\",\r",
+									"        \"wp_username\",\r",
+									"        \"wp_password\",\r",
+									"        \"id\",\r",
+									"        \"s_hash\",\r",
+									"        \"token\"\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"status\",\r",
+									"    \"message\",\r",
+									"    \"data\"\r",
+									"  ]\r",
+									"}\r",
+									"\r",
+									"pm.test(\"validating wheather response body details are as per Scheme\", () =>{\r",
+									"\r",
+									"    pm.expect(tv4.validate(jasonData,jsonshema)).to.eql(true);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "2be7d99f-b657-49b9-9f88-20d43abf3551",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"is_reserved\":true,\r\n    \"php_version\":\"7.4\",\r\n    \"site_name\":\"{{\"site_name_env\"}}\",\r\n    \"wp_version\":\"6.0\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{URL}}/api/v2/sites"
+					},
+					"response": []
+				},
+				{
+					"name": "List of sites",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "0b4d775b-2164-4a49-b9d7-e82e8ec3c9f5",
+								"exec": [
+									"var jasonData=JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is above 200ms\", () =>{\r",
+									"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Status is true',() =>{\r",
+									"    pm.expect(jasonData.status).to.eql(true);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "6241d1ca-fe41-4f9a-bbd0-32a20b3a649f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": "{{URL}}/api/v2/sites"
+					},
+					"response": []
+				},
+				{
+					"name": "List of sites-with Page and number of pages",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "ff1fbc00-4b48-4aa0-8f50-42355e9767f2",
+								"exec": [
+									"var jasonData=JSON.parse(responseBody);\r",
+									"\r",
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response time is above 500ms\", () =>{\r",
+									"    pm.expect(pm.response.responseTime).to.be.above(200);\r",
+									"})\r",
+									"\r",
+									"pm.test('Status is true',() =>{\r",
+									"    pm.expect(jasonData.status).to.eql(true);\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "e8531fcb-a559-4d78-8ac0-f6e58732ea78",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true,
+						"disabledSystemHeaders": {
+							"accept": true
+						}
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{URL}}/api/v2/sites?page=1&per_page=10",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"v2",
+								"sites"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "per_page",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Site",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "b09cf3bd-dcdd-4dc0-b715-6c2fda6b17f7",
+								"exec": [
+									"pm.test(\"Response status is 200\", () =>{\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.environment.unset(\"site_id_env\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"_postman_id": "069c7fea-e53f-40ca-893d-54342615149f",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": "{{URL}}/api/v2/sites/{{site_id_env}}"
+					},
+					"response": []
+				}
+			],
+			"_postman_id": "1faf1b77-628a-495a-8e30-1f9d69ea934d",
+			"auth": {
+				"type": "bearer",
+				"bearer": {
+					"token": "{{token}}"
+				}
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "fad68694-c460-4a47-9923-29474aadfa0e",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "b783139a-4d69-4d31-beee-4e353238d621",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "befe1bd8-8416-463f-ba69-dd4601519c32",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f00e3d55-378e-4681-8a40-42ff8c4b0ba9",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
